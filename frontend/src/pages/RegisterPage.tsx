@@ -211,7 +211,19 @@ function RegisterPage() {
                                 <MenuItem value="ADMIN">Administrador (ADMIN)</MenuItem>
                             </Select>
                         </FormControl>
-
+                        {selectedRole === 'USER' && (
+                            <Button
+                                variant="contained"
+                                fullWidth
+                                sx={{ mt: 3 }}
+                                onClick={() => {
+                                    setValidatedCode('');
+                                    setActiveStep(1);
+                                }}
+                            >
+                                Continuar
+                            </Button>
+                        )}
                         {needsInvite && (
                             <Box sx={{ mt: 2, mb: 2, p: 2, borderRadius: 1 }}>
                                 <Typography variant="body2" color="text.secondary" gutterBottom>
