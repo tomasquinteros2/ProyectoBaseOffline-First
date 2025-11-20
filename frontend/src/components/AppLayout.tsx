@@ -15,7 +15,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import DolarDisplay from './DolarDisplay';
 import ConnectionStatusIndicator from './ConnectionStatusIndicator';
-import SyncStatusIndicator from '../components/SyncStatusIndicator';
 
 function AppLayout() {
     const { logout, role } = useAuth();
@@ -121,7 +120,6 @@ function AppLayout() {
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                             <DolarDisplay />
                             <ConnectionStatusIndicator />
-                            <SyncStatusIndicator />
                             <CartIcon />
                             <Box sx={{ borderLeft: 1, borderColor: 'divider', height: 32, mx: 1 }} />
                             <Tooltip title="Cerrar Sesión">

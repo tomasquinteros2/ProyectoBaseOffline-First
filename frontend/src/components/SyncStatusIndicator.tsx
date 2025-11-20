@@ -17,7 +17,7 @@ function SyncStatusIndicator() {
     const { data: syncStatus, isError: syncError } = useQuery<SyncStatus>({
         queryKey: ['syncStatus'],
         queryFn: fetchSyncStatus,
-        refetchInterval: 5000,
+        //refetchInterval: 5000,
         enabled: onlineManager.isOnline(),
     });
 
