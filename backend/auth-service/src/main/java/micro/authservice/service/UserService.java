@@ -6,6 +6,8 @@ import micro.authservice.entity.Usuario;
 import micro.authservice.repository.AuthorityRepository;
 import micro.authservice.repository.UsuarioRepository;
 import micro.authservice.security.AuthorityConstant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +17,7 @@ import java.util.Set;
 
 @Service
 public class UserService {
-
+    private final Logger log = LoggerFactory.getLogger( UserService.class );
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
@@ -33,9 +35,17 @@ public class UserService {
 
     @Transactional
     public Usuario createUser(UserDTO userDTO, String inviteCode) {
-        // Validar el código de invitación
-        if (!authService.validateAndUseInviteCode(inviteCode, userDTO.getUsername())) {
-            throw new IllegalArgumentException("Código de invitación inválido o expirado");
+        // Determinar rol solicitado (por defecto VIEWER)
+        String role = userDTO.getRole() != null ? userDTO.getRole() : AuthorityConstant.VIEWER;
+
+        // Si el rol requiere código de invitación, validarlo
+        if (!AuthorityConstant.USER.equals(role)) {
+            if (inviteCode == null || inviteCode.isBlank()) {
+                throw new IllegalArgumentException("Se requiere un código de invitación para este rol");
+            }
+            if (!authService.validateAndUseInviteCode(inviteCode, userDTO.getUsername())) {
+                throw new IllegalArgumentException("Código de invitación inválido o expirado");
+            }
         }
 
         // Verificar si el usuario ya existe
@@ -52,14 +62,11 @@ public class UserService {
 
         // Asignar autoridades según el rol solicitado
         Set<Authority> authorities = new HashSet<>();
-        String role = userDTO.getRole() != null ? userDTO.getRole() : AuthorityConstant.VIEWER;
-
         Authority authority = authorityRepository.findByName(role)
                 .orElseThrow(() -> new IllegalArgumentException("Rol no encontrado: " + role));
 
         authorities.add(authority);
         newUser.setAuthorities(authorities);
-
         return usuarioRepository.save(newUser);
     }
 }

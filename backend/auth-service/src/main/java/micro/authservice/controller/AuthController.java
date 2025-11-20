@@ -23,6 +23,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+
     private final TokenProvider tokenProvider;
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
@@ -60,7 +61,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(
             @Valid @RequestBody UserDTO userDTO,
-            @RequestParam String inviteCode
+            @RequestParam(required = false) String inviteCode
     ) {
         try {
             Usuario user = userService.createUser(userDTO, inviteCode);
