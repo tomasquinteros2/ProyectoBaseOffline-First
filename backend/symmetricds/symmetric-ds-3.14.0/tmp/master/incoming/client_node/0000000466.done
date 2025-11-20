@@ -1,0 +1,20 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,466
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753215118871
+old,"200","0","PPNC-700AA3B-BPB","4.7674","5720.8800","BAT TELEF INAL 3XAA 700 MAH PB","2025-07-21 00:00:00","0.2100","30.0000","8000.0000","6.1976","3.9400","7437.1440","3",,"98"
+update,"200","78","PPNC-700AA3B-BPB","4.7674","5720.8800","BAT TELEF INAL 3XAA 700 MAH PB","2025-07-21 00:00:00","0.2100","30.0000","7500.0000","6.1976","3.9400","7437.1440","3","100.0000","98","200"
+commit,466

@@ -1,0 +1,13 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,455
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753215004278
+old,"212","0","asdas","7.2600","8712.0000","asdasdsa","2025-07-21 00:00:00","0.2100","30.0000","11400.0000","9.4380","6.0000","11325.6000","2","100.0000","97"
+update,"212","5656","87885858","786.5000","943800.0000","ciclo stano y testo","2025-07-21 00:00:00","0.2100","30.0000","1227000.0000","1022.4500","650.0000","1226940.0000","2","100.0000","97","212"
+commit,455

@@ -1,0 +1,41 @@
+spring:
+  config:
+    activate:
+      on-profile: offline
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${GMAIL_USERNAME}
+    password: ${GMAIL_APP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://postgres-db-offline:5432/ecopila_db_offline}
+    username: ${SPRING_DATASOURCE_USERNAME:admin}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+  eureka:
+    client:
+      enabled: false
+server:
+  tomcat:
+    threads:
+      max: 25
+
+application:
+  invite:
+    manager-email: ${APPLICATION_INVITE_MANAGER_EMAIL:redimarcelo@gmail.com}
+    from-email: ${APPLICATION_INVITE_FROM_EMAIL:redimarcelo@gmail.com}

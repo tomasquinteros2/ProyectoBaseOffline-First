@@ -1,0 +1,29 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,420
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753125919064
+old,"146","1","ILRA-DINO",,,"LUZ LED RECARGABLE DINO",,"0.2100","30.0000",,,"10.8300",,"3",,"89"
+delete,"146"
+ts,1931
+old,"145","1","ILRA-BALLENA",,,"LUZ LED RECARGABLE BALLENA",,"0.2100","30.0000",,,"10.8300",,"3",,"89"
+delete,"145"
+ts,3994
+old,"144","1","IL-E.LLAV1COB",,,"LUZ LED LLAVERO TACTICO",,"0.2100","30.0000",,,"2.3600",,"3",,"89"
+delete,"144"
+ts,6060
+old,"143","1","ILRA-GATITO",,,"LUZ LED RECARGABLE GATITO",,"0.2100","30.0000",,,"10.9200",,"3",,"89"
+delete,"143"
+commit,420

@@ -1,0 +1,54 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,405
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753124978681
+insert,"140","1","IL-HWORK24L-3AAA",,,"LINTERNA 24 LED IMAN Y GANCHO Y 3AAA",,"0.2100","30.0000",,,"4.0000",,"3",,"89"
+insert,"141","1","ILRA-UNICORNIO",,,"LUZ LED RECARGABLE UNICORNIO",,"0.2100","30.0000",,,"11.7800",,"3",,"89"
+insert,"142","1","ILRA-OSITO",,,"LUZ LED RECARGABLE OSITO",,"0.2100","30.0000",,,"10.9200",,"3",,"89"
+insert,"143","1","ILRA-GATITO",,,"LUZ LED RECARGABLE GATITO",,"0.2100","30.0000",,,"10.9200",,"3",,"89"
+insert,"144","1","IL-E.LLAV1COB",,,"LUZ LED LLAVERO TACTICO",,"0.2100","30.0000",,,"2.3600",,"3",,"89"
+insert,"145","1","ILRA-BALLENA",,,"LUZ LED RECARGABLE BALLENA",,"0.2100","30.0000",,,"10.8300",,"3",,"89"
+insert,"146","1","ILRA-DINO",,,"LUZ LED RECARGABLE DINO",,"0.2100","30.0000",,,"10.8300",,"3",,"89"
+insert,"147","1","ILRA-PINGUINO",,,"LUZ LED RECARGABLE PINGUINO",,"0.2100","30.0000",,,"10.8300",,"3",,"89"
+insert,"148","1","IL-VEL.DL009-B",,,"LUZ LED 3W BLANCA PROBATTERY",,"0.2100","30.0000",,,"5.4900",,"3",,"89"
+insert,"149","1","PNAK-23A-BBB",,,"PILA ALCALINA VINNIC 23A",,"0.2100","30.0000",,,"0.4500",,"3",,"90"
+insert,"150","1","PNAK-27A-BBB",,,"PILA ALCALINA VINNIC 27A",,"0.2100","30.0000",,,"0.4500",,"3",,"90"
+insert,"151","1","PNLB-1632-BMX",,,"PILA LITIO 1632 3V MAXELL",,"0.2100","30.0000",,,"1.3900",,"3",,"92"
+insert,"152","1","PNLB-2330-BPN",,,"PILA LITIO 2330 3V PANASONIC",,"0.2100","30.0000",,,"1.9700",,"3",,"92"
+insert,"153","1","PNLB-2450-BPN",,,"PILA LITIO 2450 3V PANASONIC",,"0.2100","30.0000",,,"1.5100",,"3",,"92"
+insert,"154","1","FRLI-1C110SD-CP1",,,"CARGADOR 1 PILA LITIO C/CORTE",,"0.2100","30.0000",,,"3.9800",,"3",,"93"
+insert,"155","1","FR-422-CP1",,,"CARGADOR 4 PILAS STANDARD",,"0.2100","30.0000",,,"5.9800",,"3",,"93"
+insert,"156","1","MC-1903420K11-K",,,"FUENTE NOTEBOOK 19V 3,42A",,"0.2100","30.0000",,,"12.0000",,"3",,"91"
+insert,"157","1","MC-1902370K5-K",,,"FUENTE NETBOOK 19V 2,37A",,"0.2100","30.0000",,,"11.2200",,"3",,"91"
+insert,"158","1","MC-1902100K14-K",,,"FUENTE NOTE 19V 2,1A 40W ACER",,"0.2100","30.0000",,,"13.9000",,"3",,"91"
+insert,"159","1","MC-1952310A10-A",,,"FUENTE NOTE 19,5V 2,31A 45W HP",,"0.2100","30.0000",,,"9.7800",,"3",,"91"
+insert,"160","1","MC-2003250A19-A",,,"FUENTE NOTE 20V  3,25A 65W PLUG C LENOVO",,"0.2100","30.0000",,,"20.2000",,"3",,"91"
+insert,"161","1","BSLA-1270-CPB",,,"BATERIA ELECT ABS 12V 7A",,"0.2100","30.0000",,,"13.4000",,"3",,"88"
+insert,"162","1","KCTB-30PIN.B-SPB",,,"CABLE USB PARA IPAD 30 PINES",,"0.2100","30.0000",,,"1.5000",,"3",,"87"
+insert,"163","1","KCTB-MINI-SPB",,,"CABLE USB MINI USB 1,5 MTS",,"0.2100","30.0000",,,"1.3400",,"3",,"87"
+insert,"164","1","PPNC-700AA3B-BPB",,,"BAT TELEF INAL 3XAA 700 MAH PB",,"0.2100","30.0000",,,"3.9400",,"3",,"94"
+insert,"165","1","PPNH-KXA31-BPB",,,"BAT TELEF INAL 2,4V 2 X 4/3AAA 830 MAH PB",,"0.2100","30.0000",,,"4.7900",,"3",,"94"
+insert,"166","1","PPNH-KXA35-BPB",,,"PACK KXA35 3,6V 650MAH",,"0.2100","30.0000",,,"4.2100",,"3",,"94"
+insert,"167","1","PRNH-AAF1500-SPB",,,"PILA NIMH 1500 MAH FLAT SUELTA",,"0.2100","30.0000",,,"1.8300",,"3",,"94"
+insert,"168","1","PRNH-AAF1200-SPB",,,"PILA NIMH AA 1200 PB",,"0.2100","30.0000",,,"1.0500",,"3",,"94"
+insert,"169","1","PRNH-AAAF600-SBB",,,"PILA NIMH AAA 600 MAH S/TETON S/M",,"0.2100","30.0000",,,"0.8800",,"3",,"94"
+insert,"170","1","PNLI-14250S-SPB",,,"PILA LITIO 1/2AA 3,6V 1,2A",,"0.2100","30.0000",,,"1.8600",,"3",,"94"
+insert,"171","1","PNLI-14505/P-SPB",,,"PILA LITIO AA 3,6V 2400MAH PB C/PINES",,"0.2100","30.0000",,,"4.4500",,"3",,"94"
+insert,"172","1","PNLI-14250/P-SPB",,,"PILA LITIO 14250 C/PIN PROBATTERY",,"0.2100","30.0000",,,"2.7600",,"3",,"94"
+insert,"173","1","PRLI-1865025-SSG",,,"PILA LITIO 18650 2500MAH SAMSUNG",,"0.2100","30.0000",,,"6.7400",,"3",,"94"
+insert,"174","1","PRLI-1865026-SSG",,,"PILA LITIO 18650 2600MAH SAMSUNG",,"0.2100","30.0000",,,"6.9300",,"3",,"94"
+insert,"175","1","PRLI-1865026T-BA",,,"PILA LITIO 18650 2600MAH C/TETON",,"0.2100","30.0000",,,"5.2200",,"3",,"94"
+commit,405

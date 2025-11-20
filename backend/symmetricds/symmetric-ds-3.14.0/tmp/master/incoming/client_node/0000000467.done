@@ -1,0 +1,13 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,467
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753215129355
+old,"199","0","KCTB-MINI-SPB","1.6214","1945.6800","CABLE USB MINI USB 1,5 MTS","2025-07-21 00:00:00","0.2100","30.0000","3000.0000","2.1078","1.3400","2529.3840","3",,"99"
+update,"199","22222222","KCTB-MINI-SPB","1.6214","1945.6800","CABLE USB MINI USB 1,5 MTS","2025-07-21 00:00:00","0.2100","30.0000","2600.0000","2.1078","1.3400","2529.3840","3","100.0000","99","199"
+commit,467

@@ -1,0 +1,23 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,469
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753215138026
+old,"198","0","KCTB-30PIN.B-SPB","1.8150","2178.0000","CABLE USB PARA IPAD 30 PINES","2025-07-21 00:00:00","0.2100","30.0000","3000.0000","2.3595","1.5000","2831.4000","3",,"99"
+update,"198","555555","KCTB-30PIN.B-SPB","1.8150","2178.0000","CABLE USB PARA IPAD 30 PINES","2025-07-21 00:00:00","0.2100","30.0000","2900.0000","2.3595","1.5000","2831.4000","3","100.0000","99","198"
+ts,7567
+old,"197","0","BSLA-1270-CPB","16.2140","19456.8000","BATERIA ELECT ABS 12V 7A","2025-07-21 00:00:00","0.2100","30.0000","26000.0000","21.0782","13.4000","25293.8400","3",,"102"
+update,"197","2012323","BSLA-1270-CPB","16.2140","19456.8000","BATERIA ELECT ABS 12V 7A","2025-07-21 00:00:00","0.2100","30.0000","25300.0000","21.0782","13.4000","25293.8400","3","100.0000","102","197"
+commit,469

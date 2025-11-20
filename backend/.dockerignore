@@ -1,0 +1,20 @@
+# Ignore Git and IDE files
+.git
+.idea
+*.iml
+
+# Ignore build outputs
+target/
+**/target/
+
+# Ignore logs and local configuration
+*.log
+.project
+.settings
+.classpath
+.git*
+
+# Ignore other artifacts
+*.csv
+*.md
+*.txt

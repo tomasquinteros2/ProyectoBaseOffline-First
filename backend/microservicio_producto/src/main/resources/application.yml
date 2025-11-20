@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: microservicio-producto
+  jpa:
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+        jdbc:
+          batch_size: 50
+        order_inserts: true
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    table: flyway_schema_history_producto
+feign:
+  client:
+    config:
+      default:
+        decode404: false
+        fallback: com.ecopila.microservicio.dolar.DolarClientFallback
+app:
+  storage:
+    local: /data/comprobantes
+    backup: /data/comprobantesBackup
+    comprobante:
+      retencion:
+        dias: 90
+  offline-mode: true
+management:
+  tracing:
+    sampling:
+      probability: 1.0

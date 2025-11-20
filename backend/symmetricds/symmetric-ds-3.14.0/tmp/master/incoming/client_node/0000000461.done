@@ -1,0 +1,20 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,461
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753215082559
+old,"205","0","PRNH-AAAF600-SBB","1.0648","1277.7600","PILA NIMH AAA 600 MAH S/TETON S/M","2025-07-21 00:00:00","0.2100","30.0000","2000.0000","1.3842","0.8800","1661.0880","3",,"98"
+update,"205","878","PRNH-AAAF600-SBB","1.0648","1277.7600","PILA NIMH AAA 600 MAH S/TETON S/M","2025-07-21 00:00:00","0.2100","30.0000","1700.0000","1.3842","0.8800","1661.0880","3","100.0000","98","205"
+commit,461

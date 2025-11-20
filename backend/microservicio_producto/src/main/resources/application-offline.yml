@@ -1,0 +1,65 @@
+server:
+  port: 8083
+
+spring:
+  config:
+    activate:
+      on-profile: offline
+    import: optional:file:./config-fallback/
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://postgres-db-offline:5432/ecopila_db_offline}
+    driver-class-name: org.postgresql.Driver
+    username: ${SPRING_DATASOURCE_USERNAME:admin}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  cloud:
+    config:
+      enabled: false
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 5000
+            readTimeout: 5000
+          microservicio-dolar:
+            url: ${FEIGN_DOLAR_SERVICE_URL:http://dolar-service:8082}
+          microservicio-tipo-producto:
+            url: ${FEIGN_TIPO_PRODUCTO_SERVICE_URL:http://tipo-producto-service:8085}
+          microservicio-proveedor:
+            url: ${FEIGN_PROVEEDOR_SERVICE_URL:http://proveedor-service:8084}
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: 6379
+  cache:
+    type: redis
+    redis:
+      time-to-live: 60000 # 1 minuto
+feign:
+  client:
+    config:
+      microservicio-dolar:
+        name: microservicio-dolar
+      microservicio-proveedor:
+        name: microservicio-proveedor
+      microservicio-tipo-producto:
+        name: microservicio-tipo-producto
+eureka:
+  client:
+    enabled: false
+    fetch-registry: false
+
+app:
+  offline-mode: true
+  storage:
+    archive: /data/ventas
+  pricing:
+    auto-update:
+      enabled: false

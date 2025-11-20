@@ -1,0 +1,23 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,471
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753215168247
+old,"214","0","0022333020230302030030203023","665500.0000","798600000.0000","una novia para tomi","2025-07-22 00:00:00","0.2100","30.0000","1038180000.0000","865150.0000","550000.0000","1038180000.0000","1","100.0000","95"
+update,"214","1","0001","665500.0000","798600000.0000","una novia para tomi","2025-07-22 00:00:00","0.2100","30.0000","1038180000.0000","865150.0000","550000.0000","1038180000.0000","1","100.0000","95","214"
+ts,6682
+old,"214","1","0001","665500.0000","798600000.0000","una novia para tomi","2025-07-22 00:00:00","0.2100","30.0000","1038180000.0000","865150.0000","550000.0000","1038180000.0000","1","100.0000","95"
+update,"214","0","0001","665500.0000","798600000.0000","una novia para tomi","2025-07-22 00:00:00","0.2100","30.0000","1038180000.0000","865150.0000","550000.0000","1038180000.0000","1","100.0000","95","214"
+commit,471

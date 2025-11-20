@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1  # H2 en memoria (volátil)
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # Se recrea en cada test
+    database-platform: org.hibernate.dialect.H2Dialect
+  config:
+    activate:
+      on-profile: test

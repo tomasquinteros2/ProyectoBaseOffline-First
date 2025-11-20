@@ -1,0 +1,21 @@
+ALTER TABLE proveedor ALTER COLUMN nombre TYPE VARCHAR(50);
+ALTER TABLE proveedor ALTER COLUMN calle TYPE VARCHAR(50);
+ALTER TABLE proveedor ALTER COLUMN codigo_postal TYPE VARCHAR(10);
+ALTER TABLE proveedor ALTER COLUMN provincia TYPE VARCHAR(50);
+ALTER TABLE proveedor ALTER COLUMN ciudad TYPE VARCHAR(50);
+ALTER TABLE proveedor ALTER COLUMN telefono_fijo TYPE VARCHAR(30);
+ALTER TABLE proveedor ALTER COLUMN celular TYPE VARCHAR(30);
+ALTER TABLE proveedor ALTER COLUMN nombre_transporte TYPE VARCHAR(30);
+ALTER TABLE proveedor ALTER COLUMN domicilio_transporte TYPE VARCHAR(50);
+ALTER TABLE proveedor ALTER COLUMN telefono_transporte TYPE VARCHAR(30);
+ALTER TABLE proveedor ALTER COLUMN pagina_web TYPE VARCHAR(100);
+ALTER TABLE proveedor ALTER COLUMN usuario_pagina TYPE VARCHAR(30);
+ALTER TABLE proveedor ALTER COLUMN contrasena_pagina TYPE VARCHAR(30);
+
+ALTER TABLE razon_social ALTER COLUMN nombre TYPE VARCHAR(50);
+ALTER TABLE razon_social ALTER COLUMN descuento_sobre_lista TYPE VARCHAR(20);
+ALTER TABLE razon_social ALTER COLUMN descuento_sobre_factura TYPE VARCHAR(20);
+
+ALTER TABLE cuenta_bancaria ALTER COLUMN alias TYPE VARCHAR(30);
+ALTER TABLE cuenta_bancaria ALTER COLUMN numero_cuenta TYPE VARCHAR(30);
+ALTER TABLE cuenta_bancaria ALTER COLUMN titular TYPE VARCHAR(50);

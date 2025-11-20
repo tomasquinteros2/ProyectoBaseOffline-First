@@ -1,0 +1,37 @@
+nodeid,client_node
+binary,BASE64
+channel,tipo_producto_channel
+batch,423
+catalog,
+schema,
+catalog,
+schema,
+table,tipo_producto
+keys,id
+columns,id,nombre
+keys,id
+columns,id,nombre
+table,tipo_producto
+keys,id
+columns,id,nombre
+basetime,1753125947214
+old,"92","PILAS BOTON OXIDO DE PLATA Y LITIO"
+delete,"92"
+ts,1585
+old,"94","PILAS RECARGABLES ESPECIALES"
+delete,"94"
+ts,8854
+insert,"95","ACCESORIOS ELECTRONICA"
+insert,"96","PILAS BOTON OXIDO DE PLATA Y LITIO"
+insert,"97","PILAS ALCALINAS ESPECIALES"
+ts,8885
+insert,"99","CABLES"
+ts,8882
+insert,"100","CARGADORES"
+ts,8880
+insert,"98","PILAS RECARGABLES ESPECIALES"
+ts,8911
+insert,"101","FUENTES NOTEBOOK"
+ts,8915
+insert,"102","BATERIAS DE GEL"
+commit,423

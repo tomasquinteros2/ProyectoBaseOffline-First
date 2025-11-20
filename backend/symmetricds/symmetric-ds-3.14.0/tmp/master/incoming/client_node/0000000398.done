@@ -1,0 +1,29 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,398
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753124907159
+old,"90","1","MC-1902370K5-K",,,"FUENTE NETBOOK 19V 2,37A",,"0.2100","30.0000",,,"11.2200",,"3",,"57"
+delete,"90"
+ts,2972
+old,"89","1","MC-1903420K11-K",,,"FUENTE NOTEBOOK 19V 3,42A",,"0.2100","30.0000",,,"12.0000",,"3",,"57"
+delete,"89"
+ts,5399
+old,"88","1","FR-422-CP1",,,"CARGADOR 4 PILAS STANDARD",,"0.2100","30.0000",,,"5.9800",,"3",,"56"
+delete,"88"
+ts,7885
+old,"87","1","FRLI-1C110SD-CP1",,,"CARGADOR 1 PILA LITIO C/CORTE",,"0.2100","30.0000",,,"3.9800",,"3",,"56"
+delete,"87"
+commit,398

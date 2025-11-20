@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: default
+  application:
+    name: microservicio-tipo-producto
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    table: flyway_schema_history_tipo_producto
+management:
+  tracing:
+    sampling:
+      probability: 1.0

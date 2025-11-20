@@ -1,0 +1,1 @@
+ALTER TABLE proveedor ALTER COLUMN pagina_web TYPE VARCHAR(500);

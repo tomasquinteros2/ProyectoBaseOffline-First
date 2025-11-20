@@ -1,0 +1,20 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,459
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753215063104
+old,"208","0","PNLI-14250/P-SPB","3.3396","4007.5200","PILA LITIO 14250 C/PIN PROBATTERY","2025-07-21 00:00:00","0.2100","30.0000","6000.0000","4.3415","2.7600","5209.7760","3",,"98"
+update,"208","46581","PNLI-14250/P-SPB","3.3396","4007.5200","PILA LITIO 14250 C/PIN PROBATTERY","2025-07-21 00:00:00","0.2100","30.0000","5300.0000","4.3415","2.7600","5209.7760","3","100.0000","98","208"
+commit,459

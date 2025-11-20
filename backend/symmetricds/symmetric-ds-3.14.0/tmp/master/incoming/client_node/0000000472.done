@@ -1,0 +1,13 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,472
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753215193935
+old,"213","61","38","10.5875","12705.0000","consolador 32cm realista","2025-07-22 00:00:00","0.2100","30.0000","16600.0000","13.7638","8.7500","16516.5000","37","100.0000","103"
+update,"213","61","38","10.5875","12705.0000","consolador 32cm realista, 45 velocidades","2025-07-22 00:00:00","0.2100","30.0000","16600.0000","13.7638","8.7500","16516.5000","37","100.0000","103","213"
+commit,472

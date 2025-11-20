@@ -1,0 +1,188 @@
+services:
+  # --- INFRAESTRUCTURA ---
+  eureka:
+    build:
+      context: ./backend
+      dockerfile: eureka-service/Dockerfile
+    ports: [ "8761:8761" ]
+    environment:
+      SPRING_PROFILES_ACTIVE: "offline"
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
+      EUREKA_CLIENT_FETCH_REGISTRY: "false"
+    volumes:
+      - eureka-data:/data
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -qO- http://localhost:8761/actuator/health | grep -q UP" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    mem_limit: 350m
+
+  postgres-db-offline:
+    image: postgres:14-alpine
+    container_name: postgres_db_offline
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: ecopila_db_offline
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    volumes:
+      - offline-db-volume:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d ecopila_db_offline" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis-data:/data
+
+  gateway-offline:
+    build:
+      context: ./backend
+      dockerfile: gateway/Dockerfile
+    ports: [ "8090:8090" ]
+    environment:
+      SPRING_PROFILES_ACTIVE: "offline"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
+      EUREKA_URI: "http://eureka:8761/eureka"
+      JWT_BASE64_SECRET: "hRFxCC9ibkLnqP9Js9FiWRbCme1dbLPLIRzQVPKmhK/LscULomJ/flJJpUaZ+M9fa+hT0X4gpeileNbQJrEBrw=="
+    depends_on:
+      eureka:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    mem_limit: 320m
+
+  auth-service:
+    build:
+      context: ./backend
+      dockerfile: auth-service/Dockerfile
+    ports: [ "8086:8086" ]
+    environment:
+      SPRING_PROFILES_ACTIVE: "offline"
+      JWT_SECRET_KEY: "hRFxCC9ibkLnqP9Js9FiWRbCme1dbLPLIRzQVPKmhK/LscULomJ/flJJpUaZ+M9fa+hT0X4gpeileNbQJrEBrw=="
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
+      GMAIL_USERNAME: "ecopilastockapp@gmail.com"
+      GMAIL_APP_PASSWORD: "zxgk uhso eyav ywui"
+      APPLICATION_INVITE_MANAGER_EMAIL: "tomas.quinteros2002@gmail.com"
+      APPLICATION_INVITE_FROM_EMAIL: "ecopilastockapp@gmail.com"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms128m -Xmx300m -XX:+ExitOnOutOfMemoryError"
+    depends_on:
+      eureka:
+        condition: service_healthy
+      postgres-db-offline:
+        condition: service_healthy
+    mem_limit: 400m
+
+  dolar-service:
+    build:
+      context: ./backend
+      dockerfile: microservicio_dolar/Dockerfile
+    ports: [ "8082:8082" ]
+    environment:
+      SPRING_PROFILES_ACTIVE: "offline"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms96m -Xmx256m -XX:+ExitOnOutOfMemoryError"
+    depends_on:
+      eureka:
+        condition: service_healthy
+      postgres-db-offline:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -qO- http://localhost:8082/actuator/health | grep -q UP" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    mem_limit: 300m
+
+  producto-service:
+    build:
+      context: ./backend
+      dockerfile: microservicio_producto/Dockerfile
+    ports: [ "8083:8083" ]
+    environment:
+      SPRING_PROFILES_ACTIVE: "offline"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms96m -Xmx256m -XX:+ExitOnOutOfMemoryError"
+    depends_on:
+      eureka:
+        condition: service_healthy
+      postgres-db-offline:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL","wget -qO- http://localhost:8083/actuator/health | grep -q UP" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 25s
+    mem_limit: 350m
+
+  proveedor-service:
+    build:
+      context: ./backend
+      dockerfile: microservicio_proveedor/Dockerfile
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_PROFILES_ACTIVE: "offline"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms96m -Xmx256m -XX:+ExitOnOutOfMemoryError"
+    depends_on:
+      eureka:
+        condition: service_healthy
+      postgres-db-offline:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL","wget -qO- http://localhost:8084/actuator/health | grep -q UP" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    mem_limit: 350m
+
+  tipo-producto-service:
+    build:
+      context: ./backend
+      dockerfile: microservicio_tipo_producto/Dockerfile
+    ports: [ "8085:8085" ]
+    environment:
+      SPRING_PROFILES_ACTIVE: "offline"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms96m -Xmx256m -XX:+ExitOnOutOfMemoryError"
+    depends_on:
+      eureka:
+        condition: service_healthy
+      postgres-db-offline:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -qO- http://localhost:8085/actuator/health | grep -q UP" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    mem_limit: 300m
+
+  frontend-pwa:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend_pwa
+    ports:
+      - "80:80"
+    depends_on:
+      producto-service:
+        condition: service_healthy
+    restart: always
+
+volumes:
+  eureka-data:
+  redis-data:
+  offline-db-volume:

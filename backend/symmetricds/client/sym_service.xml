@@ -1,0 +1,9 @@
+<service>
+  <id>symmetricds-client</id>
+  <name>SymmetricDS Client</name>
+  <description>SymmetricDS Client Node</description>
+  <executable>java</executable>
+  <arguments>sh -c 'exec java -Xmx512m -Dsym.home=/app/symmetric-ds-3.14.0 -Dspring.profiles.active=client -cp "/app/symmetric-ds-3.14.0/lib/*:/app/symmetric-ds-3.14.0/patches/*" org.jumpmind.symmetric.SymmetricLauncher --engine client'</arguments>
+  <logpath>/app/symmetricds/symmetric-ds-3.14.0/logs</logpath>
+  <logmode>roll</logmode>
+</service>

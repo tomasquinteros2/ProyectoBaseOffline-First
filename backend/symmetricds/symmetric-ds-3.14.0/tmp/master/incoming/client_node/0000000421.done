@@ -1,0 +1,26 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,421
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753125926976
+old,"142","1","ILRA-OSITO",,,"LUZ LED RECARGABLE OSITO",,"0.2100","30.0000",,,"10.9200",,"3",,"89"
+delete,"142"
+ts,1867
+old,"141","1","ILRA-UNICORNIO",,,"LUZ LED RECARGABLE UNICORNIO",,"0.2100","30.0000",,,"11.7800",,"3",,"89"
+delete,"141"
+ts,3895
+old,"140","1","IL-HWORK24L-3AAA",,,"LINTERNA 24 LED IMAN Y GANCHO Y 3AAA",,"0.2100","30.0000",,,"4.0000",,"3",,"89"
+delete,"140"
+commit,421

@@ -1,0 +1,29 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,397
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753124898351
+old,"94","1","BSLA-1270-CPB",,,"BATERIA ELECT ABS 12V 7A",,"0.2100","30.0000",,,"13.4000",,"3",,"58"
+delete,"94"
+ts,2074
+old,"93","1","MC-2003250A19-A",,,"FUENTE NOTE 20V  3,25A 65W PLUG C LENOVO",,"0.2100","30.0000",,,"20.2000",,"3",,"57"
+delete,"93"
+ts,3902
+old,"92","1","MC-1952310A10-A",,,"FUENTE NOTE 19,5V 2,31A 45W HP",,"0.2100","30.0000",,,"9.7800",,"3",,"57"
+delete,"92"
+ts,5957
+old,"91","1","MC-1902100K14-K",,,"FUENTE NOTE 19V 2,1A 40W ACER",,"0.2100","30.0000",,,"13.9000",,"3",,"57"
+delete,"91"
+commit,397

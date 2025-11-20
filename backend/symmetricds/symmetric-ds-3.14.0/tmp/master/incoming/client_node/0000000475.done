@@ -1,0 +1,12 @@
+nodeid,client_node
+binary,BASE64
+channel,auth_channel
+batch,475
+catalog,
+schema,
+table,usuario
+keys,id
+columns,id,password_hash,username
+basetime,1753215446241
+insert,"5","$2a$10$0bw3FWwyMyUf75dUNHuAMO5HV7LNbsIsmhrG2AMa2AqaKDCyXnYy2","franchulin"
+commit,475

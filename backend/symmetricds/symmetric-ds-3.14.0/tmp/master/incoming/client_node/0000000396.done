@@ -1,0 +1,32 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,396
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753124887291
+old,"99","1","PPNH-KXA35-BPB",,,"PACK KXA35 3,6V 650MAH",,"0.2100","30.0000",,,"4.2100",,"3",,"52"
+delete,"99"
+ts,2447
+old,"98","1","PPNH-KXA31-BPB",,,"BAT TELEF INAL 2,4V 2 X 4/3AAA 830 MAH PB",,"0.2100","30.0000",,,"4.7900",,"3",,"52"
+delete,"98"
+ts,4537
+old,"97","1","PPNC-700AA3B-BPB",,,"BAT TELEF INAL 3XAA 700 MAH PB",,"0.2100","30.0000",,,"3.9400",,"3",,"52"
+delete,"97"
+ts,6835
+old,"96","1","KCTB-MINI-SPB",,,"CABLE USB MINI USB 1,5 MTS",,"0.2100","30.0000",,,"1.3400",,"3",,"55"
+delete,"96"
+ts,8986
+old,"95","1","KCTB-30PIN.B-SPB",,,"CABLE USB PARA IPAD 30 PINES",,"0.2100","30.0000",,,"1.5000",,"3",,"55"
+delete,"95"
+commit,396

@@ -1,0 +1,97 @@
+server:
+  port: 8090
+
+spring:
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+    gateway:
+      httpclient:
+        connect-timeout: 10000
+        response-timeout: 30s
+      discovery:
+        locator:
+          enabled: false
+      routes:
+        - id: auth-service-offline
+          uri: ${GATEWAY_AUTH_SERVICE_URI:http://auth-service:8086}
+          predicates: [ Path=/api/auth/** ]
+          filters:
+            - StripPrefix=1
+            - name: CircuitBreaker
+              args:
+                name: authFallback
+
+        - id: producto-offline
+          uri: ${GATEWAY_PRODUCTO_SERVICE_URI:http://producto-service:8083}
+          predicates: [ Path=/api/producto/** ]
+          filters:
+            - StripPrefix=2
+            - name: CircuitBreaker
+              args:
+                name: productoFallback
+                fallbackUri: forward:/fallback/producto
+
+        - id: proveedor-offline
+          uri: ${GATEWAY_PROVEEDOR_SERVICE_URI:http://proveedor-service:8084}
+          predicates: [ Path=/api/proveedor/** ]
+          filters:
+            - StripPrefix=2
+            - name: CircuitBreaker
+              args:
+                name: proveedorFallback
+
+        - id: tipo-producto-offline
+          uri: ${GATEWAY_TIPO_PRODUCTO_SERVICE_URI:http://tipo-producto-service:8085}
+          predicates: [ Path=/api/tipo-producto/** ]
+          filters:
+            - StripPrefix=2
+            - name: CircuitBreaker
+              args:
+                name: tipoProductoFallback
+
+        - id: dolar-offline
+          uri: ${GATEWAY_DOLAR_SERVICE_URI:http://dolar-service:8082}
+          predicates: [ Path=/api/dolar/** ]
+          filters:
+            - StripPrefix=2
+            - name: CircuitBreaker
+              args:
+                name: dolarFallback
+                fallbackUri: forward:/fallback/dolar
+        - id: symmetric-client-engine-status
+          uri: http://host.docker.internal:8081
+          predicates:
+            - Path=/api/sync/sync/client/api/engine/status
+          filters:
+            - StripPrefix=1
+        - id: symmetric-engine-status
+          uri: http://host.docker.internal:8081
+          predicates:
+            - Path=/api/api/engine/status
+          filters:
+            - StripPrefix=1
+
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+
+eureka:
+  client:
+    enabled: false
+
+application:
+  security:
+    authentication:
+      jwt:
+        base64-secret: "${JWT_BASE64_SECRET}"
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    reactor.netty.http.client: INFO

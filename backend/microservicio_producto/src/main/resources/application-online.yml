@@ -1,0 +1,38 @@
+server:
+  port: 8083
+spring:
+  config:
+    activate:
+      on-profile: online
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://postgres-db:5432/ecopila_db_online}
+    username: ${SPRING_DATASOURCE_USERNAME:admin}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+feign:
+  client:
+    config:
+      microservicio-dolar:
+        name: MICROSERVICIO-DOLAR
+      microservicio-proveedor:
+        name: MICROSERVICIO-PROVEEDOR
+      microservicio-tipo-producto:
+        name: MICROSERVICIO-TIPO-PRODUCTO
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://eureka-service-online:8761/eureka/}
+    enabled: true
+  instance:
+    prefer-ip-address: true
+
+app:
+  storage:
+    archive: /data/ventas_online
+  pricing:
+    auto-update:
+      enabled: true

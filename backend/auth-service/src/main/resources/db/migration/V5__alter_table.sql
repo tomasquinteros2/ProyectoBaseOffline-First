@@ -1,0 +1,1 @@
+ALTER TABLE invite_code DROP COLUMN IF EXISTS email;

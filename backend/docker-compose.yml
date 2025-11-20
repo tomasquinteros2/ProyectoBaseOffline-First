@@ -1,0 +1,214 @@
+services:
+  eureka:
+    build:
+      context: .
+      dockerfile: eureka-service/Dockerfile
+    ports: [ "8761:8761" ]
+    environment:
+      SPRING_PROFILES_ACTIVE: "offline"
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
+      EUREKA_CLIENT_FETCH_REGISTRY: "false"
+    volumes:
+      - eureka-data:/data
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -qO- http://localhost:8761/actuator/health | grep -q UP" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    mem_limit: 350m
+
+  postgres-db-offline:
+    image: postgres:14-alpine
+    container_name: --
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: --
+      POSTGRES_USER: --
+      POSTGRES_PASSWORD: --
+    volumes:
+      - offline-db-volume:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d ecopila_db_offline" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis-data:/data
+
+  gateway-offline:
+    build:
+      context: .
+      dockerfile: gateway/Dockerfile
+    ports: [ "8090:8090" ]
+    environment:
+      SPRING_PROFILES_ACTIVE: "offline"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
+      EUREKA_URI: "http://eureka:8761/eureka"
+      JWT_BASE64_SECRET: "--"
+    depends_on:
+      eureka:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    mem_limit: 320m
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: auth-service/Dockerfile
+    ports: [ "8086:8086" ]
+    environment:
+      SPRING_PROFILES_ACTIVE: "offline"
+      JWT_SECRET_KEY: "--"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
+      GMAIL_USERNAME: "--"
+      GMAIL_APP_PASSWORD: "---"
+      APPLICATION_INVITE_MANAGER_EMAIL: "--"
+      APPLICATION_INVITE_FROM_EMAIL: "--"
+    depends_on:
+      eureka:
+        condition: service_healthy
+      postgres-db-offline:
+        condition: service_healthy
+    mem_limit: 384m
+
+  dolar-service:
+    build:
+      context: .
+      dockerfile: microservicio_dolar/Dockerfile
+    ports: [ "8082:8082" ]
+    environment:
+      SPRING_PROFILES_ACTIVE: "offline"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -XX:+ClassUnloading -XX:ActiveProcessorCount=1 -XX:ThreadStackSize=512k -Xms96m -Xmx176m -XX:MaxMetaspaceSize=112m -XX:ReservedCodeCacheSize=48m -XX:MaxDirectMemorySize=32m -XX:+ExitOnOutOfMemoryError -Dspring.main.lazy-initialization=true -Dserver.tomcat.threads.max=16"
+    depends_on:
+      eureka:
+        condition: service_healthy
+      postgres-db-offline:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -qO- http://localhost:8082/actuator/health | grep -q UP" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    mem_limit: 256m
+
+  producto-service:
+    build:
+      context: .
+      dockerfile: microservicio_producto/Dockerfile
+    ports: [ "8083:8083" ]
+    environment:
+      SPRING_PROFILES_ACTIVE: "offline"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
+    depends_on:
+      eureka:
+        condition: service_healthy
+      postgres-db-offline:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL","wget -qO- http://localhost:8083/actuator/health | grep -q UP" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 25s
+    mem_limit: 280m
+
+  proveedor-service:
+    build:
+      context: .
+      dockerfile: microservicio_proveedor/Dockerfile
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_PROFILES_ACTIVE: "offline"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -XX:+ClassUnloading -XX:ActiveProcessorCount=1 -XX:ThreadStackSize=512k -Xms96m -Xmx168m -XX:MaxMetaspaceSize=112m -XX:ReservedCodeCacheSize=32m -XX:MaxDirectMemorySize=12m -XX:+ExitOnOutOfMemoryError -Dspring.main.lazy-initialization=true -Dserver.tomcat.threads.max=16"
+    depends_on:
+      eureka:
+        condition: service_healthy
+      postgres-db-offline:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL","wget -qO- http://localhost:8084/actuator/health | grep -q UP" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    mem_limit: 300m
+
+
+  tipo-producto-service:
+    build:
+      context: .
+      dockerfile: microservicio_tipo_producto/Dockerfile
+    ports: [ "8085:8085" ]
+    environment:
+      SPRING_PROFILES_ACTIVE: "offline"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -XX:+ClassUnloading -XX:ActiveProcessorCount=1 -XX:ThreadStackSize=512k -Xms96m -Xmx168m -XX:MaxMetaspaceSize=96m -XX:ReservedCodeCacheSize=40m -XX:MaxDirectMemorySize=24m -XX:+ExitOnOutOfMemoryError -Dspring.main.lazy-initialization=true -Dserver.tomcat.threads.max=16"
+    depends_on:
+      eureka:
+        condition: service_healthy
+      postgres-db-offline:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -qO- http://localhost:8085/actuator/health | grep -q UP" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    mem_limit: 300m
+
+# symmetricds-client:
+      #   build:
+      #     context: .
+      #     dockerfile: symmetricds/client/Dockerfile
+      #   container_name: symmetricds_client_${INSTANCE_ID:-1}
+      #   hostname: client-${INSTANCE_ID:-1}
+      #   ports:
+      #     - "${CLIENT_PORT:-8081}:8081"
+      #   environment:
+      #     - JAVA_OPTS=-Xmx512m -Dh2.baseDir=/app
+      #     - INSTANCE_ID=${INSTANCE_ID:-1}
+      #     - SYMMETRIC_ROUTING_IGNORE_DUPLICATE_BATCH_INSERTS=true
+      #   volumes:
+      #     - symmetricds-client-data:/app/data
+      #   depends_on:
+      #     producto-service:
+      #       condition: service_healthy
+      #     proveedor-service:
+      #       condition: service_healthy
+      #     tipo-producto-service:
+      #       condition: service_healthy
+      #     dolar-service:
+      #       condition: service_healthy
+      #     auth-service:
+      #       condition: service_started
+      #   networks:
+      #     - default
+
+  frontend-pwa:
+    build:
+      context: ../ecopila-pwa
+      dockerfile: Dockerfile
+    container_name: frontend_pwa
+    ports:
+      - "4173:80"
+    depends_on:
+      producto-service:
+        condition: service_healthy
+
+volumes:
+  eureka-data:
+  redis-data:
+  offline-db-volume:
+  symmetricds-client-data:

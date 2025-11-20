@@ -1,0 +1,32 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,399
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753124917347
+old,"86","1","PNLB-2450-BPN",,,"PILA LITIO 2450 3V PANASONIC",,"0.2100","30.0000",,,"1.5100",,"3",,"53"
+delete,"86"
+ts,2509
+old,"85","1","PNLB-2330-BPN",,,"PILA LITIO 2330 3V PANASONIC",,"0.2100","30.0000",,,"1.9700",,"3",,"53"
+delete,"85"
+ts,4763
+old,"84","1","PNLB-1632-BMX",,,"PILA LITIO 1632 3V MAXELL",,"0.2100","30.0000",,,"1.3900",,"3",,"53"
+delete,"84"
+ts,6850
+old,"83","1","PNAK-27A-BBB",,,"PILA ALCALINA VINNIC 27A",,"0.2100","30.0000",,,"0.4500",,"3",,"59"
+delete,"83"
+ts,9414
+old,"82","1","PNAK-23A-BBB",,,"PILA ALCALINA VINNIC 23A",,"0.2100","30.0000",,,"0.4500",,"3",,"59"
+delete,"82"
+commit,399

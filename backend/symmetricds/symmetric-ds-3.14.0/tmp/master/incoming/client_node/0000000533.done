@@ -1,0 +1,13 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,533
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753293383113
+old,"195","0","MC-1952310A10-A","11.8338","14200.5600","FUENTE NOTE 19,5V 2,31A 45W HP","2025-07-21 00:00:00","0.2100","30.0000","19000.0000","15.3839","9.7800","18460.7280","3",,"101"
+update,"195","1","MC-1952310A10-A","11.8338","14200.5600","FUENTE NOTE 19,5V 2,31A 45W HP","2025-07-21 00:00:00","0.2100","30.0000","18500.0000","15.3839","9.7800","18460.7280","3","100.0000","101","195"
+commit,533

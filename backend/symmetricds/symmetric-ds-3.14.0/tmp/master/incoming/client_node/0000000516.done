@@ -1,0 +1,13 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,516
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753221444767
+old,"215","55499","heladera philips","1028.5000","1234200.0000","heladera philips","2025-07-22 00:00:00","0.2100","30.0000","1604500.0000","1337.0500","850.0000","1604460.0000","3","100.0000","97"
+update,"215","55498","heladera philips","1028.5000","1234200.0000","heladera philips","2025-07-22 00:00:00","0.2100","30.0000","1604500.0000","1337.0500","850.0000","1604460.0000","3","100.0000","97","215"
+commit,516

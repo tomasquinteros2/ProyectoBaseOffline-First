@@ -1,0 +1,29 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,419
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753125908636
+old,"150","1","PNAK-27A-BBB",,,"PILA ALCALINA VINNIC 27A",,"0.2100","30.0000",,,"0.4500",,"3",,"90"
+delete,"150"
+ts,3861
+old,"149","1","PNAK-23A-BBB",,,"PILA ALCALINA VINNIC 23A",,"0.2100","30.0000",,,"0.4500",,"3",,"90"
+delete,"149"
+ts,6032
+old,"148","1","IL-VEL.DL009-B",,,"LUZ LED 3W BLANCA PROBATTERY",,"0.2100","30.0000",,,"5.4900",,"3",,"89"
+delete,"148"
+ts,8099
+old,"147","1","ILRA-PINGUINO",,,"LUZ LED RECARGABLE PINGUINO",,"0.2100","30.0000",,,"10.8300",,"3",,"89"
+delete,"147"
+commit,419

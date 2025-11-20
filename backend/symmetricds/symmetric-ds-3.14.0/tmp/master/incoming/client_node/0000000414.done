@@ -1,0 +1,29 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,414
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753125859104
+old,"173","1","PRLI-1865025-SSG",,,"PILA LITIO 18650 2500MAH SAMSUNG",,"0.2100","30.0000",,,"6.7400",,"3",,"94"
+delete,"173"
+ts,2404
+old,"172","1","PNLI-14250/P-SPB",,,"PILA LITIO 14250 C/PIN PROBATTERY",,"0.2100","30.0000",,,"2.7600",,"3",,"94"
+delete,"172"
+ts,4630
+old,"171","1","PNLI-14505/P-SPB",,,"PILA LITIO AA 3,6V 2400MAH PB C/PINES",,"0.2100","30.0000",,,"4.4500",,"3",,"94"
+delete,"171"
+ts,6687
+old,"170","1","PNLI-14250S-SPB",,,"PILA LITIO 1/2AA 3,6V 1,2A",,"0.2100","30.0000",,,"1.8600",,"3",,"94"
+delete,"170"
+commit,414

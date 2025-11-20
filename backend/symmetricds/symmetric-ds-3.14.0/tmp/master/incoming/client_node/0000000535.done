@@ -1,0 +1,15 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,535
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753293930919
+old,"211","46","PRLI-1865026T-BA","6.3162","7579.4400","PILA LITIO 18650 2600MAH C/TETON","2025-07-21 00:00:00","0.2100","30.0000","9900.0000","8.2111","5.2200","9853.2720","3","100.0000","98"
+update,"211","44","PRLI-1865026T-BA","6.3162","7579.4400","PILA LITIO 18650 2600MAH C/TETON","2025-07-21 00:00:00","0.2100","30.0000","9900.0000","8.2111","5.2200","9853.2720","3","100.0000","98","211"
+old,"210","49983","PRLI-1865026-SSG","8.3853","10062.3600","PILA LITIO 18650 2600MAH SAMSUNG","2025-07-21 00:00:00","0.2100","30.0000","13100.0000","10.9009","6.9300","13081.0680","3","100.0000","98"
+update,"210","49982","PRLI-1865026-SSG","8.3853","10062.3600","PILA LITIO 18650 2600MAH SAMSUNG","2025-07-21 00:00:00","0.2100","30.0000","13100.0000","10.9009","6.9300","13081.0680","3","100.0000","98","210"
+commit,535

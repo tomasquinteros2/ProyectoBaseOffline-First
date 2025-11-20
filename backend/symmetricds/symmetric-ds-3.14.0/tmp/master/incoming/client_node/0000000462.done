@@ -1,0 +1,23 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,462
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753215088182
+old,"204","0","PRNH-AAF1200-SPB","1.2705","1524.6000","PILA NIMH AA 1200 PB","2025-07-21 00:00:00","0.2100","30.0000","2000.0000","1.6516","1.0500","1981.9800","3",,"98"
+update,"204","454","PRNH-AAF1200-SPB","1.2705","1524.6000","PILA NIMH AA 1200 PB","2025-07-21 00:00:00","0.2100","30.0000","2000.0000","1.6517","1.0500","1981.9800","3","100.0000","98","204"
+ts,9498
+old,"203","0","PRNH-AAF1500-SPB","2.2143","2657.1600","PILA NIMH 1500 MAH FLAT SUELTA","2025-07-21 00:00:00","0.2100","30.0000","4000.0000","2.8786","1.8300","3454.3080","3",,"98"
+update,"203","45","PRNH-AAF1500-SPB","2.2143","2657.1600","PILA NIMH 1500 MAH FLAT SUELTA","2025-07-21 00:00:00","0.2100","30.0000","3500.0000","2.8786","1.8300","3454.3080","3","100.0000","98","203"
+commit,462

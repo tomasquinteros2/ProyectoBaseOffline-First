@@ -1,0 +1,19 @@
+nodeid,client_node
+binary,BASE64
+channel,heartbeat
+batch,412
+catalog,
+schema,
+catalog,
+schema,
+table,sym_node_host
+keys,node_id,host_name
+columns,node_id,host_name,instance_id,ip_address,os_user,os_name,os_arch,os_version,available_processors,free_memory_bytes,total_memory_bytes,max_memory_bytes,java_version,java_vendor,jdbc_version,symmetric_version,timezone_offset,heartbeat_time,last_restart_time,create_time
+keys,node_id,host_name
+columns,node_id,host_name,instance_id,ip_address,os_user,os_name,os_arch,os_version,available_processors,free_memory_bytes,total_memory_bytes,max_memory_bytes,java_version,java_vendor,jdbc_version,symmetric_version,timezone_offset,heartbeat_time,last_restart_time,create_time
+table,sym_node_host
+keys,node_id,host_name
+columns,node_id,host_name,instance_id,ip_address,os_user,os_name,os_arch,os_version,available_processors,free_memory_bytes,total_memory_bytes,max_memory_bytes,java_version,java_vendor,jdbc_version,symmetric_version,timezone_offset,heartbeat_time,last_restart_time,create_time
+basetime,1753125791820
+insert,"client_node","b854947009cd","53e260ce3f80-fc766d24-584e-4804-a4b6-ad827a0b053f","172.18.0.11","root","Linux","amd64","5.15.153.1-microsoft-standard-WSL2","12","27270856","88080384","1990197248","17.0.2","Oracle Corporation","42.3.3","3.14.0","+00:00","2025-07-21 19:23:11.000000","2025-07-21 19:23:03.467000","2025-07-21 19:23:11.819000"
+commit,412

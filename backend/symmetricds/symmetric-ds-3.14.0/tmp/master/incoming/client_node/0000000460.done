@@ -1,0 +1,16 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,460
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753215070226
+old,"207","0","PNLI-14505/P-SPB","5.3845","6461.4000","PILA LITIO AA 3,6V 2400MAH PB C/PINES","2025-07-21 00:00:00","0.2100","30.0000","9000.0000","6.9998","4.4500","8399.8200","3",,"98"
+update,"207","7848","PNLI-14505/P-SPB","5.3845","6461.4000","PILA LITIO AA 3,6V 2400MAH PB C/PINES","2025-07-21 00:00:00","0.2100","30.0000","8400.0000","6.9999","4.4500","8399.8200","3","100.0000","98","207"
+ts,5776
+old,"206","0","PNLI-14250S-SPB","2.2506","2700.7200","PILA LITIO 1/2AA 3,6V 1,2A","2025-07-21 00:00:00","0.2100","30.0000","4000.0000","2.9258","1.8600","3510.9360","3",,"98"
+update,"206","502","PNLI-14250S-SPB","2.2506","2700.7200","PILA LITIO 1/2AA 3,6V 1,2A","2025-07-21 00:00:00","0.2100","30.0000","3600.0000","2.9258","1.8600","3510.9360","3","100.0000","98","206"
+commit,460

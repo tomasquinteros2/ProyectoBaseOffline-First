@@ -1,0 +1,30 @@
+nodeid,client_node
+binary,BASE64
+channel,tipo_producto_channel
+batch,406
+catalog,
+schema,
+catalog,
+schema,
+table,tipo_producto
+keys,id
+columns,id,nombre
+keys,id
+columns,id,nombre
+table,tipo_producto
+keys,id
+columns,id,nombre
+basetime,1753124977623
+insert,"87","CABLES"
+insert,"88","BATERIAS DE GEL"
+insert,"90","PILAS ALCALINAS ESPECIALES"
+ts,1
+insert,"89","ACCESORIOS ELECTRONICA"
+ts,32
+insert,"91","FUENTES NOTEBOOK"
+ts,34
+insert,"92","PILAS BOTON OXIDO DE PLATA Y LITIO"
+ts,57
+insert,"93","CARGADORES"
+insert,"94","PILAS RECARGABLES ESPECIALES"
+commit,406

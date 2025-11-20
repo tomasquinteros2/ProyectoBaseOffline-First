@@ -1,0 +1,13 @@
+nodeid,client_node
+binary,BASE64
+channel,dolar_channel
+batch,550
+catalog,
+schema,
+table,dolar
+keys,id
+columns,id,nombre,precio
+basetime,1753371000012
+old,"1","Dólar Oficial","1275.0000"
+update,"1","Dólar Oficial","1280.0000","1"
+commit,550

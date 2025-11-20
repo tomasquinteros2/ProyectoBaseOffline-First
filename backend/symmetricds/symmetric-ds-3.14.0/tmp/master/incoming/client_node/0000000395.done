@@ -1,0 +1,29 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,395
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753124877280
+old,"103","1","PNLI-14250S-SPB",,,"PILA LITIO 1/2AA 3,6V 1,2A",,"0.2100","30.0000",,,"1.8600",,"3",,"52"
+delete,"103"
+ts,2679
+old,"102","1","PRNH-AAAF600-SBB",,,"PILA NIMH AAA 600 MAH S/TETON S/M",,"0.2100","30.0000",,,"0.8800",,"3",,"52"
+delete,"102"
+ts,4819
+old,"101","1","PRNH-AAF1200-SPB",,,"PILA NIMH AA 1200 PB",,"0.2100","30.0000",,,"1.0500",,"3",,"52"
+delete,"101"
+ts,7166
+old,"100","1","PRNH-AAF1500-SPB",,,"PILA NIMH 1500 MAH FLAT SUELTA",,"0.2100","30.0000",,,"1.8300",,"3",,"52"
+delete,"100"
+commit,395

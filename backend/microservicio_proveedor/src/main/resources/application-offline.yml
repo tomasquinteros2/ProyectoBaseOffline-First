@@ -1,0 +1,56 @@
+server:
+  port: 8084
+
+spring:
+  config:
+    activate:
+      on-profile: offline
+    import: optional:file:./config-fallback/
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://postgres-db-offline:5432/ecopila_db_offline}
+    driver-class-name: org.postgresql.Driver
+    username: ${SPRING_DATASOURCE_USERNAME:admin}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  cloud:
+    config:
+      enabled: false
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 5000
+            readTimeout: 5000
+          microservicio-producto:
+            url: ${FEIGN_PRODUCTO_SERVICE_URL:http://producto-service:8083}
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: 6379
+  cache:
+    type: redis
+    redis:
+      time-to-live: 60000 # 1 minuto
+feign:
+  client:
+    config:
+      microservicio-producto:
+        name: microservicio-producto
+eureka:
+  client:
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka:8761/eureka
+    should-use-delta: false
+
+app:
+  offline-mode: true

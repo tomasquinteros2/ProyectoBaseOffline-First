@@ -1,0 +1,35 @@
+nodeid,client_node
+binary,BASE64
+channel,tipo_producto_channel
+batch,422
+catalog,
+schema,
+catalog,
+schema,
+table,tipo_producto
+keys,id
+columns,id,nombre
+keys,id
+columns,id,nombre
+table,tipo_producto
+keys,id
+columns,id,nombre
+basetime,1753125937831
+old,"87","CABLES"
+delete,"87"
+ts,1137
+old,"88","BATERIAS DE GEL"
+delete,"88"
+ts,2592
+old,"89","ACCESORIOS ELECTRONICA"
+delete,"89"
+ts,3892
+old,"90","PILAS ALCALINAS ESPECIALES"
+delete,"90"
+ts,6729
+old,"91","FUENTES NOTEBOOK"
+delete,"91"
+ts,7946
+old,"93","CARGADORES"
+delete,"93"
+commit,422

@@ -1,0 +1,20 @@
+nodeid,client_node
+binary,BASE64
+channel,producto_channel
+batch,464
+catalog,
+schema,
+catalog,
+schema,
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+table,producto
+keys,id
+columns,id,cantidad,codigo_producto,costo_dolares,costo_pesos,descripcion,fecha_ingreso,iva,porcentaje_ganancia,precio_publico,precio_publico_us,precio_sin_iva,precio_sin_redondear,proveedor_id,resto,tipo_producto_id
+basetime,1753215111939
+old,"201","0","PPNH-KXA31-BPB","5.7959","6955.0800","BAT TELEF INAL 2,4V 2 X 4/3AAA 830 MAH PB","2025-07-21 00:00:00","0.2100","30.0000","10000.0000","7.5347","4.7900","9041.6040","3",,"98"
+update,"201","454","PPNH-KXA31-BPB","5.7959","6955.0800","BAT TELEF INAL 2,4V 2 X 4/3AAA 830 MAH PB","2025-07-21 00:00:00","0.2100","30.0000","9100.0000","7.5347","4.7900","9041.6040","3","100.0000","98","201"
+commit,464
