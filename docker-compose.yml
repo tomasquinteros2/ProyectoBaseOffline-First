@@ -4,7 +4,6 @@ services:
     build:
       context: ./backend
       dockerfile: eureka-service/Dockerfile
-    ports: [ "8761:8761" ]
     environment:
       SPRING_PROFILES_ACTIVE: "offline"
       EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
@@ -17,13 +16,12 @@ services:
       timeout: 5s
       retries: 5
       start_period: 15s
-    mem_limit: 350m
+    mem_limit: 512m
+    restart: unless-stopped
 
   postgres-db-offline:
     image: postgres:14-alpine
     container_name: postgres_db_offline
-    ports:
-      - "5433:5432"
     environment:
       POSTGRES_DB: ecopila_db_offline
       POSTGRES_USER: admin
@@ -36,11 +34,14 @@ services:
       timeout: 5s
       retries: 5
       start_period: 15s
+    ports: [ "5433:5432" ]
+    restart: unless-stopped
 
   redis:
     image: redis:alpine
     volumes:
       - redis-data:/data
+    restart: unless-stopped
 
   gateway-offline:
     build:
@@ -57,13 +58,13 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
-    mem_limit: 320m
+    mem_limit: 512m
+    restart: unless-stopped
 
   auth-service:
     build:
       context: ./backend
       dockerfile: auth-service/Dockerfile
-    ports: [ "8086:8086" ]
     environment:
       SPRING_PROFILES_ACTIVE: "offline"
       JWT_SECRET_KEY: "hRFxCC9ibkLnqP9Js9FiWRbCme1dbLPLIRzQVPKmhK/LscULomJ/flJJpUaZ+M9fa+hT0X4gpeileNbQJrEBrw=="
@@ -72,24 +73,24 @@ services:
       GMAIL_APP_PASSWORD: "zxgk uhso eyav ywui"
       APPLICATION_INVITE_MANAGER_EMAIL: "tomas.quinteros2002@gmail.com"
       APPLICATION_INVITE_FROM_EMAIL: "ecopilastockapp@gmail.com"
-      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms128m -Xmx300m -XX:+ExitOnOutOfMemoryError"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms128m -Xmx350m -XX:+ExitOnOutOfMemoryError"
     depends_on:
       eureka:
         condition: service_healthy
       postgres-db-offline:
         condition: service_healthy
-    mem_limit: 400m
+    mem_limit: 600m
+    restart: unless-stopped
 
   dolar-service:
     build:
       context: ./backend
       dockerfile: microservicio_dolar/Dockerfile
-    ports: [ "8082:8082" ]
     environment:
       SPRING_PROFILES_ACTIVE: "offline"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
-      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms96m -Xmx256m -XX:+ExitOnOutOfMemoryError"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms128m -Xmx300m -XX:+ExitOnOutOfMemoryError"
     depends_on:
       eureka:
         condition: service_healthy
@@ -101,17 +102,17 @@ services:
       timeout: 5s
       retries: 5
       start_period: 20s
-    mem_limit: 300m
+    mem_limit: 512m
+    restart: unless-stopped
 
   producto-service:
     build:
       context: ./backend
       dockerfile: microservicio_producto/Dockerfile
-    ports: [ "8083:8083" ]
     environment:
       SPRING_PROFILES_ACTIVE: "offline"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
-      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms96m -Xmx256m -XX:+ExitOnOutOfMemoryError"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms128m -Xmx300m -XX:+ExitOnOutOfMemoryError"
     depends_on:
       eureka:
         condition: service_healthy
@@ -123,18 +124,17 @@ services:
       timeout: 5s
       retries: 5
       start_period: 25s
-    mem_limit: 350m
+    mem_limit: 512m
+    restart: unless-stopped
 
   proveedor-service:
     build:
       context: ./backend
       dockerfile: microservicio_proveedor/Dockerfile
-    ports:
-      - "8084:8084"
     environment:
       SPRING_PROFILES_ACTIVE: "offline"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
-      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms96m -Xmx256m -XX:+ExitOnOutOfMemoryError"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms128m -Xmx300m -XX:+ExitOnOutOfMemoryError"
     depends_on:
       eureka:
         condition: service_healthy
@@ -146,17 +146,17 @@ services:
       timeout: 5s
       retries: 5
       start_period: 20s
-    mem_limit: 350m
+    mem_limit: 512m
+    restart: unless-stopped
 
   tipo-producto-service:
     build:
       context: ./backend
       dockerfile: microservicio_tipo_producto/Dockerfile
-    ports: [ "8085:8085" ]
     environment:
       SPRING_PROFILES_ACTIVE: "offline"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
-      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms96m -Xmx256m -XX:+ExitOnOutOfMemoryError"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -Xms128m -Xmx300m -XX:+ExitOnOutOfMemoryError"
     depends_on:
       eureka:
         condition: service_healthy
@@ -168,7 +168,8 @@ services:
       timeout: 5s
       retries: 5
       start_period: 20s
-    mem_limit: 300m
+    mem_limit: 512m
+    restart: unless-stopped
 
   frontend-pwa:
     build:
