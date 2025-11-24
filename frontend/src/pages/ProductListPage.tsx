@@ -501,8 +501,12 @@ function ProductListPage() {
         return new Intl.NumberFormat('es-AR', { maximumFractionDigits }).format(percent) + '%';
     };
 
+    // typescript
     const handleGenerateCustomPdf = async () => {
-        const productsToPrint = allProducts.filter(p => selectedProducts.has(p.id));
+        // Construir lista de productos a imprimir buscando cada id seleccionado
+        const productsToPrint = Array.from(selectedProducts)
+            .map(id => products.find(p => p.id === id) ?? allProducts.find(p => p.id === id))
+            .filter((p): p is Producto => Boolean(p));
 
         if (productsToPrint.length === 0) {
             toast.error('No hay productos seleccionados para generar la lista.');
