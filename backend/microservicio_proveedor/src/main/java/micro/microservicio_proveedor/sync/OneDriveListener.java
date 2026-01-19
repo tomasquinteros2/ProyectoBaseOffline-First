@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-@Component
+// @Component
 @NoArgsConstructor
 @Slf4j
 public class OneDriveListener {
@@ -40,13 +40,13 @@ public class OneDriveListener {
         }
     }
 
-    @PostPersist
-    @PostUpdate
+    // @PostPersist
+    // @PostUpdate
     public void onSave(Object entity) {
         exportChange(entity, "SAVE");
     }
 
-    @PostRemove
+    // @PostRemove
     public void onDelete(Object entity) {
         exportChange(entity, "DELETE");
     }

@@ -52,7 +52,7 @@ public class InitialSnapshotService {
         initialSyncCompleted.set(true);
         log.info("✅ Initial sync marcado como completado. SyncService puede procesar archivos.");
     }
-    @PostConstruct
+    // @PostConstruct
     void init() {
         String fileName = String.format("snapshot_full_%s_%s.json", appName, syncProps.getNodeId());
         snapshotFile = new File(syncProps.getFolderPath(), fileName);

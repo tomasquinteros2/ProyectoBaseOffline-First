@@ -29,7 +29,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Service
+// @Service
 @RequiredArgsConstructor
 @Slf4j
 public class SyncService {
@@ -47,7 +47,7 @@ public class SyncService {
     private Path processedLogFilePath;
 
 
-    @PostConstruct
+    // @PostConstruct
     public void init() {
         this.repoMap = syncRepos.stream()
                 .collect(Collectors.toMap(SyncableRepository::getEntityClassName, Function.identity()));
@@ -62,7 +62,7 @@ public class SyncService {
         }
     }
 
-    @Scheduled(fixedDelay = 5000)
+    // @Scheduled(fixedDelay = 5000)
     public void processIncomingFiles() {
         if (!initialSnapshotService.isInitialSyncCompleted()) {
             log.debug("⏳ Esperando a que complete el snapshot inicial antes de procesar archivos...");

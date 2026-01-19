@@ -30,7 +30,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
-@Service
+// @Service
 @RequiredArgsConstructor
 @Slf4j
 public class InitialSnapshotService {
@@ -55,7 +55,7 @@ public class InitialSnapshotService {
     @Getter
     private final AtomicBoolean initialSyncCompleted = new AtomicBoolean(false);
 
-    @PostConstruct
+    // @PostConstruct
     void init() {
         String fileName = String.format("snapshot_full_%s_%s.json", appName, syncProps.getNodeId());
         snapshotFile = new File(syncProps.getFolderPath(), fileName);

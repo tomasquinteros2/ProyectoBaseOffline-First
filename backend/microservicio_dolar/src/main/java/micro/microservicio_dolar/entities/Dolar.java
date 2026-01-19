@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(OneDriveListener.class)
+// @EntityListeners(OneDriveListener.class)
 public class Dolar implements Serializable {
 
     @Id
