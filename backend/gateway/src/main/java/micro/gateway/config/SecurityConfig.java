@@ -42,7 +42,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         // Permite peticiones desde el origen de la PWA
-        configuration.setAllowedOrigins(List.of("http://localhost:5173","http://localhost:4173","https://pwa-two-iota.vercel.app"));
+        configuration.setAllowedOrigins(List.of("http://localhost:5173","http://localhost:4173","https://pwa-two-iota.vercel.app", "http://212.47.70.237"));
         // Permite los métodos HTTP que necesita
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         // Permite todas las cabeceras
