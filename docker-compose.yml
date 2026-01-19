@@ -78,13 +78,13 @@ services:
       APPLICATION_INVITE_MANAGER_EMAIL: "redimarcelo@gmail.com"
       APPLICATION_INVITE_FROM_EMAIL: "ecopilastockapp@gmail.com"
       SERVER_PORT: 8086
-      APP_SYNC_NODE-ID: "AUTO"
-      APP_SYNC_FOLDER-PATH: "/sync_data"
+      #APP_SYNC_NODE-ID: "AUTO"
+      #APP_SYNC_FOLDER-PATH: "/sync_data"
       SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 600000
       SPRING_DATASOURCE_HIKARI_KEEP_ALIVE_TIME: 300000
       SPRING_DATASOURCE_HIKARI_CONNECTION_TEST_QUERY: "SELECT 1"
     volumes:
-      - ${ONEDRIVE_SYNC}:/sync_data
+      #- ${ONEDRIVE_SYNC}:/sync_data
       - app-config:/app/config
     depends_on:
       eureka:
@@ -106,11 +106,11 @@ services:
       SPRING_DATASOURCE_HIKARI_KEEP_ALIVE_TIME: 300000
       SPRING_DATASOURCE_HIKARI_CONNECTION_TEST_QUERY: "SELECT 1"
       JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -XX:+ClassUnloading -XX:ActiveProcessorCount=1 -XX:ThreadStackSize=512k -Xms96m -Xmx176m -XX:MaxMetaspaceSize=112m -XX:ReservedCodeCacheSize=48m -XX:MaxDirectMemorySize=32m -XX:+ExitOnOutOfMemoryError -Dserver.tomcat.threads.max=16"
-      APP_SYNC_FOLDER-PATH: "/sync_data"
-      APP_SYNC_NODE-ID: "AUTO"
+      #APP_SYNC_FOLDER-PATH: "/sync_data"
+      #APP_SYNC_NODE-ID: "AUTO"
       SERVER_PORT: 8082
     volumes:
-      - sync-data:/sync_data
+      #- sync-data:/sync_data
       - app-config:/app/config
     depends_on:
       eureka:
@@ -136,15 +136,15 @@ services:
       SPRING_DATASOURCE_HIKARI_KEEP_ALIVE_TIME: 300000
       SPRING_DATASOURCE_HIKARI_CONNECTION_TEST_QUERY: "SELECT 1"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
-      APP_SYNC_NODE-ID: "AUTO"
-      APP_SYNC_FOLDER-PATH: "/sync_data"
+      #APP_SYNC_NODE-ID: "AUTO"
+      #APP_SYNC_FOLDER-PATH: "/sync_data"
     depends_on:
       eureka:
         condition: service_healthy
       postgres-db-offline:
         condition: service_healthy
     volumes:
-      - sync-data:/sync_data
+      #- sync-data:/sync_data
       - app-config:/app/config
     healthcheck:
       test: [ "CMD-SHELL","wget -qO- http://localhost:8083/actuator/health | grep -q UP" ]
@@ -168,8 +168,8 @@ services:
       SPRING_DATASOURCE_HIKARI_KEEP_ALIVE_TIME: 300000
       SPRING_DATASOURCE_HIKARI_CONNECTION_TEST_QUERY: "SELECT 1"
       JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -XX:+ClassUnloading -XX:ActiveProcessorCount=1 -XX:ThreadStackSize=512k -Xms96m -Xmx168m -XX:MaxMetaspaceSize=112m -XX:ReservedCodeCacheSize=32m -XX:MaxDirectMemorySize=12m -XX:+ExitOnOutOfMemoryError -Dserver.tomcat.threads.max=16"
-      APP_SYNC_NODE-ID: "AUTO"
-      APP_SYNC_FOLDER-PATH: "/sync_data"
+      #APP_SYNC_NODE-ID: "AUTO"
+      #APP_SYNC_FOLDER-PATH: "/sync_data"
       SERVER_PORT: 8084
     depends_on:
       eureka:
@@ -177,7 +177,7 @@ services:
       postgres-db-offline:
         condition: service_healthy
     volumes:
-      - sync-data:/sync_data
+      #- sync-data:/sync_data
       - app-config:/app/config
     healthcheck:
       test: [ "CMD-SHELL","wget -qO- http://localhost:8084/actuator/health | grep -q UP" ]
@@ -200,8 +200,8 @@ services:
       SPRING_DATASOURCE_HIKARI_KEEP_ALIVE_TIME: 300000
       SPRING_DATASOURCE_HIKARI_CONNECTION_TEST_QUERY: "SELECT 1"
       JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -XX:+ClassUnloading -XX:ActiveProcessorCount=1 -XX:ThreadStackSize=512k -Xms96m -Xmx168m -XX:MaxMetaspaceSize=96m -XX:ReservedCodeCacheSize=40m -XX:MaxDirectMemorySize=24m -XX:+ExitOnOutOfMemoryError -Dserver.tomcat.threads.max=16"
-      APP_SYNC_NODE-ID: "AUTO"
-      APP_SYNC_FOLDER-PATH: "/sync_data"
+      #APP_SYNC_NODE-ID: "AUTO"
+      #APP_SYNC_FOLDER-PATH: "/sync_data"
       SERVER_PORT: 8085
     depends_on:
       eureka:
@@ -209,7 +209,7 @@ services:
       postgres-db-offline:
         condition: service_healthy
     volumes:
-      - sync-data:/sync_data
+      #- sync-data:/sync_data
       - app-config:/app/config
     healthcheck:
       test: [ "CMD-SHELL", "wget -qO- http://localhost:8085/actuator/health | grep -q UP" ]
@@ -235,9 +235,9 @@ volumes:
   redis-data:
   offline-db-volume:
   app-config:
-  sync-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: "${ONEDRIVE_SYNC}"
+  #sync-data:
+    #driver: local
+    #driver_opts:
+      #type: none
+      #o: bind
+      #device: "${ONEDRIVE_SYNC}"
