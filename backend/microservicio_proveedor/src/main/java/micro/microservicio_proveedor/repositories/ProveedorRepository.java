@@ -2,13 +2,15 @@ package micro.microservicio_proveedor.repositories;
 
 import micro.microservicio_proveedor.entities.Proveedor;
 import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.JpaRepository;
+import micro.microservicio_proveedor.sync.SyncableRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ProveedorRepository extends JpaRepository<Proveedor, Long> {
+@Repository
+public interface ProveedorRepository extends SyncableRepository<Proveedor, Long> {
 
     Optional<Proveedor> findByNombre(String nombre);
 
@@ -21,4 +23,14 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Long> {
 
     @Query(value = "SELECT COALESCE(MAX(EXTRACT(EPOCH FROM updated_at)), 0) FROM proveedor", nativeQuery = true)
     Long findMaxLastModifiedTimestamp();
+
+    @Override
+    default String getEntityClassName() {
+        return Proveedor.class.getSimpleName();
+    }
+
+    @Override
+    default Class<Proveedor> getEntityClass() { return Proveedor.class; }
+
+    Optional<Proveedor> findByNombreIgnoreCase(String nombre);
 }

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 public class VentaItemArchivado {
 
     @Id
-    private Long id; // Mismo ID que el item original.
+    private Long id;
 
     private Long productoId;
     private String productoDescripcion;

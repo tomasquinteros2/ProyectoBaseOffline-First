@@ -1,10 +1,12 @@
 package micro.microservicio_tipo_producto.services;
 
 import jakarta.transaction.Transactional;
+import micro.microservicio_tipo_producto.entities.LastModifiedDTO;
 import micro.microservicio_tipo_producto.entities.TipoProducto;
 import micro.microservicio_tipo_producto.exceptions.BusinessLogicException;
 import micro.microservicio_tipo_producto.exceptions.ResourceNotFoundException;
 import micro.microservicio_tipo_producto.repositories.TipoProductoRepository;
+import micro.microservicio_tipo_producto.sync.OneDriveListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
@@ -13,6 +15,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.util.*;
 import java.util.function.Function;
@@ -32,7 +36,7 @@ public class TipoProductoService {
         this.tipoProductoRepository = tipoProductoRepository;
         this.objectMapper = new ObjectMapper();
     }
-    @Cacheable(value = "tiposProducto", unless = "#result == null || #result.isEmpty()")
+    //@Cacheable(value = "tiposProducto", unless = "#result == null || #result.isEmpty()")
     public List<TipoProducto> findAll() {
         log.info("Buscando todos los tipos de producto.");
         return tipoProductoRepository.findAll();
@@ -79,7 +83,15 @@ public class TipoProductoService {
         }
 
         log.info("Guardando {} nuevos tipos de producto.", tiposRealmenteNuevos.size());
-        return tipoProductoRepository.saveAll(tiposRealmenteNuevos);
+
+        List<TipoProducto> tiposGuardados =  tipoProductoRepository.saveAll(tiposRealmenteNuevos);
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                tiposGuardados.forEach(p -> OneDriveListener.exportChange(p, "SAVE"));
+            }
+        });
+        return tiposGuardados;
     }
 
     @Caching(
@@ -97,7 +109,12 @@ public class TipoProductoService {
             throw new BusinessLogicException("Ya existe un tipo de producto con el nombre: " + tipoProducto.getNombre());
         }
         TipoProducto tipoGuardado = tipoProductoRepository.save(tipoProducto);
-
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                OneDriveListener.exportChange(tipoGuardado, "SAVE");
+            }
+        });
         return tipoGuardado;
     }
 
@@ -122,7 +139,12 @@ public class TipoProductoService {
         tipoExistente.setNombre(tipoProductoDetails.getNombre());
 
         TipoProducto tipoActualizado = tipoProductoRepository.save(tipoExistente);
-
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                OneDriveListener.exportChange(tipoActualizado, "SAVE");
+            }
+        });
         return tipoActualizado;
     }
 
@@ -136,7 +158,14 @@ public class TipoProductoService {
         if (!tipoProductoRepository.existsById(id)) {
             throw new ResourceNotFoundException("Tipo de producto no encontrado con ID: " + id);
         }
+        TipoProducto existing = findById(id);
         tipoProductoRepository.deleteById(id);
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                OneDriveListener.exportChange(existing, "DELETE");
+            }
+        });
         log.info("Tipo de producto con ID {} eliminado correctamente.", id);
     }
     public void validarExistencia(List<Long> ids) {
@@ -155,5 +184,10 @@ public class TipoProductoService {
             throw new ResourceNotFoundException("No se encontraron los siguientes IDs de tipo de producto: " + uniqueIds);
         }
         log.info("Todos los {} IDs de tipos de producto fueron validados exitosamente.", uniqueIds.size());
+    }
+    @Transactional
+    public LastModifiedDTO getLastModified() {
+        Long timestamp = tipoProductoRepository.findMaxLastModifiedTimestamp();
+        return new LastModifiedDTO(timestamp != null ? timestamp : 0L);
     }
 }

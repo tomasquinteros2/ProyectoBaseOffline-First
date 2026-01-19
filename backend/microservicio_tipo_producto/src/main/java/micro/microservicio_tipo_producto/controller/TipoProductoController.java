@@ -1,9 +1,11 @@
 package micro.microservicio_tipo_producto.controller;
 
+import micro.microservicio_tipo_producto.entities.LastModifiedDTO;
 import micro.microservicio_tipo_producto.entities.TipoProducto;
 import micro.microservicio_tipo_producto.services.TipoProductoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,9 @@ public class TipoProductoController {
 
     @GetMapping("")
     public ResponseEntity<List<TipoProducto>> getAllTiposProducto() {
+        log.info("Llego a controller getAllTiposProducto");
         List<TipoProducto> tipos = tipoProductoService.findAll();
+        log.info("Volvio a controller getAllTiposProducto: " + tipos);
         return ResponseEntity.ok(tipos);
     }
 
@@ -61,5 +65,12 @@ public class TipoProductoController {
     public ResponseEntity<Void> validarTiposProducto(@RequestBody List<Long> ids) {
         tipoProductoService.validarExistencia(ids);
         return ResponseEntity.ok().build();
+    }
+    @GetMapping("/last-modified")
+    public ResponseEntity<LastModifiedDTO> getLastModified() {
+        LastModifiedDTO lastModified = tipoProductoService.getLastModified();
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.noCache())
+                .body(lastModified);
     }
 }

@@ -3,6 +3,7 @@ package micro.microservicio_producto.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import micro.microservicio_producto.exceptions.ResourceNotFoundException;
+import micro.microservicio_producto.sync.OneDriveListener;
 import org.springframework.transaction.annotation.Transactional;
 import micro.microservicio_producto.entities.DTO.*;
 import micro.microservicio_producto.entities.*;
@@ -15,6 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
+import micro.microservicio_producto.sync.OneDriveListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -103,6 +108,13 @@ public class VentaService {
 
         nuevaVenta.setTotalVenta(totalVenta);
         Venta ventaGuardada = ventaRepository.save(nuevaVenta);
+
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                OneDriveListener.exportChange(ventaGuardada, "SAVE");
+            }
+        });
 
         return mapToVentaResponseDTO(ventaGuardada);
     }
@@ -213,5 +225,7 @@ public class VentaService {
         itemDTO.setPrecioUnitario(item.getPrecioUnitario());
         return itemDTO;
     }
+
+
 
 }

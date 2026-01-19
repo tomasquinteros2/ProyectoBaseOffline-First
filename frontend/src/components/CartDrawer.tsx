@@ -31,8 +31,10 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
     const [completedVenta, setCompletedVenta] = useState<Venta | null>(null);
 
     const cartTotal = useMemo(() => {
+        {console.log('Recalculating cart total...'+ cartItems.length + ' items')}
+        {console.log(cartItems)}
         return cartItems.reduce((total, item) => {
-            const itemPrice = item.product.precio_publico ?? 0;
+            const itemPrice = item.product.precio ?? 0;
             return total + (itemPrice * item.quantity);
         }, 0);
     }, [cartItems]);
@@ -114,8 +116,8 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                                     </Tooltip>
                                 }>
                                     <ListItemText
-                                        primary={item.product.descripcion}
-                                        secondary={`$${item.product.precio_publico?.toLocaleString('es-AR', { minimumFractionDigits: 2 }) ?? 'N/D'}`}
+                                        primary={item.product.nombre}
+                                        secondary={`$${item.product.precio?.toLocaleString('es-AR', { minimumFractionDigits: 2 }) ?? 'N/D'}`}
                                     />
                                     <TextField
                                         type="number"

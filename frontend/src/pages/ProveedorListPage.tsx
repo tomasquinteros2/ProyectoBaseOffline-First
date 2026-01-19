@@ -172,6 +172,7 @@ export default function ProveedorListPage() {
     return (
         <>
             <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+                {isAdmin && (
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
                     <Typography variant="h4" component="h1" fontWeight="bold">
                         Gestión de Proveedores
@@ -185,7 +186,7 @@ export default function ProveedorListPage() {
                     >
                         Nuevo Proveedor
                     </Button>
-                </Box>
+                </Box>)}
 
                 <Grid container spacing={3}>
                     {proveedores?.map((proveedor) => (

@@ -2,6 +2,7 @@ package micro.microservicio_proveedor.services;
 
 import micro.microservicio_proveedor.entities.dto.LastModifiedDTO;
 import micro.microservicio_proveedor.events.CotizacionCambiadaEvent;
+import micro.microservicio_proveedor.sync.OneDriveListener;
 import org.springframework.context.ApplicationEventPublisher;
 import jakarta.transaction.Transactional;
 import micro.microservicio_proveedor.entities.Proveedor;
@@ -18,6 +19,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
@@ -80,6 +83,12 @@ public class ProveedorService {
         });
 
         Proveedor proveedorGuardado = proveedorRepository.save(proveedor);
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                OneDriveListener.exportChange(proveedorGuardado, "SAVE");
+            }
+        });
         log.info("Proveedor nuevo guardado: {}", proveedorGuardado);
         return proveedorGuardado;
     }
@@ -128,6 +137,12 @@ public class ProveedorService {
         }
 
         log.info("Proveedor con ID {} actualizado correctamente.", id);
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                OneDriveListener.exportChange(proveedorActualizado, "SAVE");
+            }
+        });
         return proveedorActualizado;
     }
 
@@ -155,7 +170,14 @@ public class ProveedorService {
         if (!proveedorRepository.existsById(id)) {
             throw new ResourceNotFoundException("Proveedor no encontrado con ID: " + id);
         }
+        Proveedor existing = findById(id);
         proveedorRepository.deleteById(id);
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                OneDriveListener.exportChange(existing, "DELETE");
+            }
+        });
         log.info("Proveedor con ID {} eliminado correctamente.", id);
     }
 

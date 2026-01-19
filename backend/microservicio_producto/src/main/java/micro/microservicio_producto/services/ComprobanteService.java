@@ -4,8 +4,11 @@ import jakarta.transaction.Transactional;
 import micro.microservicio_producto.entities.NroComprobante;
 import micro.microservicio_producto.exceptions.ResourceNotFoundException;
 import micro.microservicio_producto.repositories.ComprobanteRepository;
+import micro.microservicio_producto.sync.OneDriveListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -65,6 +68,12 @@ public class ComprobanteService {
         } else {
             comprobante.setNumero(numeroActual + 1);
         }
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                OneDriveListener.exportChange(comprobante, "SAVE");
+            }
+        });
         return comprobante;
     }
 
@@ -89,6 +98,7 @@ public class ComprobanteService {
         guardarCopiaLocal(htmlComprobante, numeroCompleto);
 
         comprobanteRepository.save(nroComprobante);
+
 
         return nuevoComprobante;
     }

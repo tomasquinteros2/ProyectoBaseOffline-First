@@ -1,6 +1,7 @@
 package micro.microservicio_producto.repositories;
 
 import micro.microservicio_producto.entities.Producto;
+import micro.microservicio_producto.sync.SyncableRepository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @Repository
-public interface ProductoRepository extends JpaRepository<Producto, Long> , JpaSpecificationExecutor<Producto> {
+public interface ProductoRepository extends SyncableRepository<Producto, Long>, JpaSpecificationExecutor<Producto> {
 
     
     @Override
@@ -23,6 +24,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> , JpaS
 
 
     @Override
+    @EntityGraph(attributePaths = {"productosRelacionados"})
     List<Producto> findAll();
 
     @Query("SELECT p FROM Producto p")
@@ -81,4 +83,11 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> , JpaS
 
     @Query(value = "SELECT COALESCE(MAX(EXTRACT(EPOCH FROM updated_at)), 0) FROM producto", nativeQuery = true)
     Long findMaxLastModifiedTimestamp();
+
+    default String getEntityClassName() {
+        return Producto.class.getSimpleName();
+    }
+
+    default Class<Producto> getEntityClass() { return Producto.class; }
+
 }

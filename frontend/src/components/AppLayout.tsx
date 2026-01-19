@@ -120,6 +120,7 @@ function AppLayout() {
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                             <DolarDisplay />
                             <ConnectionStatusIndicator />
+                            {/* <SyncStatusIndicator /> */}
                             <CartIcon />
                             <Box sx={{ borderLeft: 1, borderColor: 'divider', height: 32, mx: 1 }} />
                             <Tooltip title="Cerrar Sesión">

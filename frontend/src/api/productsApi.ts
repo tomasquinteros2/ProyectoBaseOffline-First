@@ -1,8 +1,8 @@
 import apiClient from './apiClient';
 import type { Producto, Proveedor, TipoProducto, RelatedProductResult,Page } from '../types/Producto';
-import type { SyncStatus } from '../types/Sync';
+/*import type { SyncStatus } from '../types/Sync';
 import type {QueryClient} from "@tanstack/react-query";
-
+*/
 export interface ProductPayload {
     codigoProducto: string;
     descripcion: string;
@@ -183,7 +183,7 @@ export const bulkUploadProducts = async (products: ProductPayload[]): Promise<vo
     await apiClient.post('/producto/productos/cargar-masivo', products);
 };
 
-export async function fetchSyncStatus(): Promise<SyncStatus> {
+/*export async function fetchSyncStatus(): Promise<SyncStatus> {
     const endpoints = ['/api/engine/status'];
     let lastError: unknown;
 
@@ -199,10 +199,15 @@ export async function fetchSyncStatus(): Promise<SyncStatus> {
     }
 
     throw lastError;
-}
+}*/
 
 export async function fetchProductsLastModified(): Promise<{ lastModified: number }> {
     const { data } = await apiClient.get<{ lastModified: number }>('/producto/productos/last-modified');
+    return data;
+}
+
+export async function fetchTipoProductoLastModified(): Promise<{ lastModified: number }> {
+    const { data } = await apiClient.get<{ lastModified: number }>('/tipo-producto/tiposproducto/last-modified');
     return data;
 }
 

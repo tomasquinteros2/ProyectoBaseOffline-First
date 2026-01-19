@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import micro.microservicio_producto.sync.OneDriveListener;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -13,10 +14,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -38,7 +36,7 @@ public class Producto {
     )
     private Long id;
 
-    @Column(name = "codigo_producto",nullable = true, unique = false)
+    @Column(name = "codigo_producto", nullable = true, unique = false)
     private String codigoProducto;
 
     @Column
@@ -65,10 +63,10 @@ public class Producto {
     @Column(precision = 19, scale = 4)
     private BigDecimal porcentaje_ganancia;
 
-    @Column(precision = 19, scale = 4,nullable = true)
+    @Column(precision = 19, scale = 4, nullable = true)
     private BigDecimal costo_dolares;
 
-    @Column(precision = 19, scale = 4,nullable = false)
+    @Column(precision = 19, scale = 4, nullable = false)
     private BigDecimal costo_pesos;
 
     @Column(precision = 19, scale = 4)
@@ -107,12 +105,15 @@ public class Producto {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    @Transient
+    @JsonIgnore
+    private List<Long> productosRelacionadosIdsSnapshot = List.of();
+
     @PrePersist
     protected void onCreate() {
         if (this.codigoProducto == null || this.codigoProducto.trim().isEmpty()) {
             this.codigoProducto = "PROD-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
         }
-
         LocalDateTime now = LocalDateTime.now();
         createdAt = now;
         updatedAt = now;
@@ -120,7 +121,12 @@ public class Producto {
 
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreRemove
+    protected void onBeforeDelete() {
+        cacheProductosRelacionadosSnapshot();
     }
 
     @JsonProperty("productosRelacionadosIds")
@@ -128,9 +134,13 @@ public class Producto {
         if (productosRelacionados == null) {
             return List.of();
         }
-        return productosRelacionados.stream()
-                .map(Producto::getId)
-                .collect(Collectors.toList());
+        try {
+            return productosRelacionados.stream()
+                    .map(Producto::getId)
+                    .collect(Collectors.toList());
+        } catch (NullPointerException ex) {
+            return List.of();
+        }
     }
 
     public void agregarRelacion(Producto producto) {
@@ -143,5 +153,15 @@ public class Producto {
         producto.getProductosRelacionados().remove(this);
     }
 
-
+    private void cacheProductosRelacionadosSnapshot() {
+        if (productosRelacionados == null) {
+            productosRelacionadosIdsSnapshot = List.of();
+            return;
+        }
+        this.productosRelacionados = new HashSet<>(this.productosRelacionados);
+        this.productosRelacionadosIdsSnapshot = this.productosRelacionados.stream()
+                .map(Producto::getId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
 }

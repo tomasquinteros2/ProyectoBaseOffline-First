@@ -1,5 +1,6 @@
 package micro.microservicio_producto.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NroComprobante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +32,5 @@ public class NroComprobante {
     public String getNumeroComprobante(){
         return prefijo + numero;
     }
+
 }

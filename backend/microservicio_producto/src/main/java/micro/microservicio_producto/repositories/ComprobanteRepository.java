@@ -4,6 +4,7 @@ package micro.microservicio_producto.repositories;
 
 import feign.Param;
 import micro.microservicio_producto.entities.NroComprobante;
+import micro.microservicio_producto.sync.SyncableRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ComprobanteRepository extends JpaRepository<NroComprobante, Long> {
+public interface ComprobanteRepository extends SyncableRepository<NroComprobante, Long> {
 
     @Query("SELECT c FROM NroComprobante c WHERE c.fechaGeneracion < :fechaLimite")
     List<NroComprobante> findComprobantesAntiguos(LocalDateTime fechaLimite);
@@ -28,4 +29,11 @@ public interface ComprobanteRepository extends JpaRepository<NroComprobante, Lon
     @Modifying
     @Query("DELETE FROM NroComprobante c WHERE c.fechaGeneracion < :fechaLimite")
     int deleteByFechaGeneracionBefore(@Param("fechaLimite") LocalDateTime fechaLimite);
+
+    default String getEntityClassName() {
+        return NroComprobante.class.getSimpleName();
+    }
+
+    default Class<NroComprobante> getEntityClass() { return NroComprobante.class; }
+
 }

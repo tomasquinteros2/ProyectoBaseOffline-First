@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e
+
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+    CREATE USER $APP_DB_USER WITH SUPERUSER PASSWORD '$APP_DB_PASS';
+
+    CREATE DATABASE ecopila_db_caja1;
+    GRANT ALL PRIVILEGES ON DATABASE ecopila_db_caja1 TO $APP_DB_USER;
+
+    CREATE DATABASE ecopila_db_caja2;
+    GRANT ALL PRIVILEGES ON DATABASE ecopila_db_caja2 TO $APP_DB_USER;
+
+    CREATE DATABASE ecopila_db_caja3;
+    GRANT ALL PRIVILEGES ON DATABASE ecopila_db_caja3 TO $APP_DB_USER;
+EOSQL
+
+# Nota: Se crea un usuario 'app_user' para que los microservicios no se conecten como superusuario 'admin'.
+# Esto es una buena práctica de seguridad.

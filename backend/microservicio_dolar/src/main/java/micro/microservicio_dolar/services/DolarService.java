@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import micro.microservicio_dolar.entities.dto.DolarApiResponseDTO;
 import micro.microservicio_dolar.entities.Dolar;
 import micro.microservicio_dolar.repository.DolarRepository;
+import micro.microservicio_dolar.sync.OneDriveListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +20,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -77,6 +80,12 @@ public class DolarService {
             dolar.setNombre(initialName);
             dolar.setPrecio(initialPrice);
             dolarRepository.save(dolar);
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+                @Override
+                public void afterCommit() {
+                    OneDriveListener.exportChange(dolar, "SAVE");
+                }
+            });
             log.info("Registro de Dólar inicial creado: {}", dolar);
         } else {
             // Si ya hay datos, no hacemos nada. Se usará el último valor guardado.
@@ -109,6 +118,12 @@ public class DolarService {
     @Transactional
     public Dolar save(Dolar dolar) {
         Dolar newDolar = dolarRepository.save(dolar);
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                OneDriveListener.exportChange(newDolar, "SAVE");
+            }
+        });
         log.info("Dólar guardado: {}", newDolar);
         return newDolar;
     }
@@ -129,6 +144,12 @@ public class DolarService {
         existingDolar.setPrecio(dolarDetails.getPrecio());
 
         Dolar updatedDolar = dolarRepository.save(existingDolar);
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                OneDriveListener.exportChange(updatedDolar, "SAVE");
+            }
+        });
         log.info("Dólar actualizado ID {}: {}", id, updatedDolar);
         return updatedDolar;
     }
@@ -143,7 +164,14 @@ public class DolarService {
         if (!dolarRepository.existsById(id)) {
             throw new NoSuchElementException("El dólar con ID " + id + " no existe y no puede ser eliminado.");
         }
+        Dolar exiting = dolarRepository.findById(id).orElse(null);
         dolarRepository.deleteById(id);
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                OneDriveListener.exportChange(exiting, "DELETE");
+            }
+        });
         log.info("Dólar eliminado con ID: {}", id);
     }
 

@@ -1,5 +1,6 @@
 package micro.microservicio_dolar.entities;
 
+import micro.microservicio_dolar.sync.OneDriveListener;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(OneDriveListener.class)
 public class Dolar implements Serializable {
 
     @Id

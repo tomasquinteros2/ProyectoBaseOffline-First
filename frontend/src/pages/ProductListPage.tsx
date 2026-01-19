@@ -36,6 +36,7 @@ import {
     fetchRelatedProducts,
     fetchProductsLastModified,
     deleteMultipleProducts,
+    fetchTipoProductoLastModified,
     type ProductPayload
 } from '../api/productsApi';
 import type { Producto, RelatedProductResult, Page } from '../types/Producto';
@@ -177,6 +178,7 @@ function ProductListPage() {
     const { role } = useAuth();
     const isAdmin = role === 'ADMIN';
     const canViewAllData = role === 'ADMIN' || role === 'VIEWER';
+    const isViewer = role === 'VIEWER';
 
     const [editingCell, setEditingCell] = useState<{ id: number | string; field: 'porcentaje_ganancia' | 'precio_sin_iva' } | null>(null);
     const [editValue, setEditValue] = useState('');
@@ -198,8 +200,7 @@ function ProductListPage() {
     const [allProducts, setAllProducts] = useState<Producto[]>([]);
     const [selectedProducts, setSelectedProducts] = useState(new Set<number | string>());
     const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
-    const [allProductIds, setAllProductIds] = useState<Set<number | string>>(new Set());
-
+    const { data: tiposProducto } = useQuery({ queryKey: ['tiposProducto'], queryFn: fetchTiposProducto });
 
     const updateFieldMutation = useMutation<Producto, Error, { id: string; field: string; value: number }>({
         mutationFn: async ({ id, field, value }) => {
@@ -307,8 +308,14 @@ function ProductListPage() {
     const products = pageData?.content ?? [];
 
     const { data: dolarData } = useQuery({ queryKey: ['dolar'], queryFn: fetchDolar });
-    const { data: proveedores } = useQuery({ queryKey: ['proveedores'], queryFn: fetchProveedoresDetallados });
-    const { data: tiposProducto } = useQuery({ queryKey: ['tiposProducto'], queryFn: fetchTiposProducto });
+    const { data: proveedores } = useQuery({
+        queryKey: ['proveedores'],
+        queryFn: fetchProveedoresDetallados,
+        staleTime: 0,
+    });
+    const proveedorOptions = (proveedores ?? []).slice().sort((a, b) =>
+        a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })
+    );
 
     const proveedorMap = useMemo(() => {
         if (!proveedores) return new Map<number, string>();
@@ -501,20 +508,80 @@ function ProductListPage() {
         return new Intl.NumberFormat('es-AR', { maximumFractionDigits }).format(percent) + '%';
     };
 
-    // typescript
-    const handleGenerateCustomPdf = async () => {
-        // Construir lista de productos a imprimir buscando cada id seleccionado
-        const productsToPrint = Array.from(selectedProducts)
-            .map(id => products.find(p => p.id === id) ?? allProducts.find(p => p.id === id))
-            .filter((p): p is Producto => Boolean(p));
+    const tiposFiltradosQuery = useQuery({
+        queryKey: ['tiposProductoByProveedor', proveedorFilter],
+        queryFn: async () => {
+            // Si no hay filtro de proveedor, devolvemos todos los tipos ya cargados
+            if (!proveedorFilter) return tiposProducto ?? [];
 
-        if (productsToPrint.length === 0) {
+            // Paginado para recopilar todos los productos del proveedor y extraer los tipoIds
+            const tipoIds = new Set<number>();
+            let currentPage = 0;
+            const pageSize = 100;
+            let hasMore = true;
+
+            while (hasMore) {
+                const pageData = await fetchProducts(currentPage, pageSize, '', proveedorFilter, '');
+                pageData.content.forEach(p => {
+                    if (p.tipoProductoId != null) tipoIds.add(p.tipoProductoId);
+                });
+                hasMore = pageData.content.length === pageSize;
+                currentPage++;
+            }
+
+            return (tiposProducto ?? []).filter(t => tipoIds.has(t.id));
+        },
+        enabled: !!tiposProducto, // esperar a que tiposProducto esté disponible
+        staleTime: 1000 * 60 * 5,
+    });
+
+    const tipoOptions = (
+        proveedorFilter
+            ? (tiposFiltradosQuery.data ?? [])
+            : (tiposProducto ?? [])
+    ).slice().sort((a, b) =>
+        a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })
+    );
+
+    const handleGenerateCustomPdf = async () => {
+        const selectedIds = Array.from(selectedProducts).map(id => String(id));
+
+        // Buscar en memoria (allProducts y products (pageData.content) si existe)
+        let foundProducts = selectedIds
+            .map(id => (allProducts.find(p => String(p.id) === id) ?? products.find(p => String(p.id) === id)))
+            .filter(Boolean) as Producto[];
+
+        // Si faltan productos, cargar todos los productos paginados (misma estrategia que exportProductsToExcel)
+        if (foundProducts.length < selectedIds.length) {
+            try {
+                const allFetched: Producto[] = [];
+                let currentPage = 0;
+                const pageSize = 100;
+                let hasMore = true;
+
+                while (hasMore) {
+                    const pageData = await fetchProducts(currentPage, pageSize, '', '', '');
+                    allFetched.push(...pageData.content);
+                    hasMore = pageData.content.length === pageSize;
+                    currentPage++;
+                }
+
+                foundProducts = selectedIds
+                    .map(id => allFetched.find(p => String(p.id) === id))
+                    .filter(Boolean) as Producto[];
+            } catch (err) {
+                console.error('Error cargando productos completos:', err);
+                toast.error('No se pudieron cargar todos los productos seleccionados.');
+                return;
+            }
+        }
+
+        if (foundProducts.length === 0) {
             toast.error('No hay productos seleccionados para generar la lista.');
             return;
         }
 
         setIsGeneratingPdf(true);
-
         try {
             toast.loading('Generando PDF personalizado...', { id: 'custom-pdf-toast' });
 
@@ -524,7 +591,8 @@ function ProductListPage() {
             doc.setFontSize(12);
             doc.text(`Generado el: ${new Date().toLocaleDateString('es-AR')}`, 14, 32);
 
-            const tableData = productsToPrint.map(p => [
+            const tableData = foundProducts.map(p => [
+                p.id,
                 p.codigoProducto,
                 p.descripcion,
                 String(p.cantidad ?? ''),
@@ -532,7 +600,7 @@ function ProductListPage() {
             ]);
 
             autoTable(doc, {
-                head: [['Código', 'Descripción', 'Cantidad', 'Precio Público']],
+                head: [['id', 'Código', 'Descripción', 'Cantidad', 'Precio Público']],
                 body: tableData,
                 startY: 40,
                 styles: { fontSize: 10 },
@@ -682,6 +750,15 @@ function ProductListPage() {
     };
     const lastKnownProductsTimestamp = useRef<number>(0);
     const lastKnownProveedoresTimestamp = useRef<number>(0);
+    const lastKnownTiposProductoTimestamp = useRef<number>(0);
+
+    const { data: tiposProductoLastModifiedData } = useQuery({
+        queryKey: ['tiposProductoLastModified'],
+        queryFn: fetchTipoProductoLastModified,
+        refetchInterval: 5000,
+        staleTime: 0,
+        enabled: onlineManager.isOnline(),
+    });
 
 // Query que verifica cambios en productos cada 5 segundos
     const { data: productsLastModifiedData } = useQuery({
@@ -701,6 +778,24 @@ function ProductListPage() {
         enabled: onlineManager.isOnline(),
     });
 
+    useEffect(() => {
+        if (!tiposProductoLastModifiedData) return;
+
+        if (lastKnownTiposProductoTimestamp.current === 0) {
+            // Primera vez: solo guardar el timestamp sin invalidar
+            lastKnownTiposProductoTimestamp.current = tiposProductoLastModifiedData.lastModified;
+            return;
+        }
+
+        if (tiposProductoLastModifiedData.lastModified > lastKnownTiposProductoTimestamp.current) {
+            console.log('Cambios en rubros (tiposProducto) detectados, actualizando...');
+            lastKnownTiposProductoTimestamp.current = tiposProductoLastModifiedData.lastModified;
+            void queryClient.invalidateQueries({ queryKey: ['tiposProducto'] });
+
+            //el combo filtrado por proveedor se recalcula también:
+            void queryClient.invalidateQueries({ queryKey: ['tiposProductoByProveedor'] });
+        }
+    }, [tiposProductoLastModifiedData, queryClient]);
 // Efecto que invalida productos cuando detecta cambios
     useEffect(() => {
         if (!productsLastModifiedData) return;
@@ -819,7 +914,7 @@ function ProductListPage() {
                                 onChange={(e) => handleProveedorChange(e.target.value)}
                             >
                                 <MenuItem value="">Todos</MenuItem>
-                                {proveedores?.map((p) => (
+                                {proveedorOptions?.map((p) => (
                                     <MenuItem key={p.id} value={String(p.id)}>
                                         {p.nombre}
                                     </MenuItem>
@@ -829,17 +924,17 @@ function ProductListPage() {
                     </Grid>
                     <Grid item xs={12} md={2}>
                         <FormControl fullWidth>
-                            <InputLabel>Tipo</InputLabel>
+                            <InputLabel id="tipo-label">Rubro</InputLabel>
                             <Select
+                                labelId="tipo-label"
                                 value={tipoFilter}
-                                label="Tipo"
-                                onChange={(e) => handleTipoChange(e.target.value)}
+                                label="Rubro"
+                                onChange={(e) => handleTipoChange(e.target.value as string)}
+                                disabled={tiposFiltradosQuery.isFetching}
                             >
                                 <MenuItem value="">Todos</MenuItem>
-                                {tiposProducto?.map((t) => (
-                                    <MenuItem key={t.id} value={String(t.id)}>
-                                        {t.nombre}
-                                    </MenuItem>
+                                {tipoOptions.map(t => (
+                                    <MenuItem key={t.id} value={String(t.id)}>{t.nombre}</MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
@@ -882,7 +977,7 @@ function ProductListPage() {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            {isAdmin && (
+                            {canViewAllData && (
                                 <TableCell padding="checkbox">
                                     <Checkbox
                                         indeterminate={
@@ -972,7 +1067,7 @@ function ProductListPage() {
                                 }}
                                 onClick={() => canViewAllData && handleProductClick(product)}
                             >
-                                {isAdmin && (
+                                {canViewAllData && (
                                     <TableCell padding="checkbox" onClick={(e) => e.stopPropagation()}>
                                         <Checkbox
                                             checked={selectedProducts.has(product.id)}
@@ -1377,7 +1472,7 @@ function ProductListPage() {
                 open={isBulkUploadOpen}
                 onClose={handleBulkUploadClose}
             />
-            {selectedProducts.size > 0 && (
+            {isAdmin && selectedProducts.size > 0 &&(
                 <Box sx={{ position: 'fixed', bottom: 16, left: 16, boxShadow: 3, borderRadius: 2, p: 1.5, zIndex: 1000 }}>
                     <Button
                         variant="contained"

@@ -4,11 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+
+import micro.authservice.entity.listener.UsuarioPasswordListener;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -16,6 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "usuario")
+@EntityListeners(UsuarioPasswordListener.class)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -41,21 +40,26 @@ public class Usuario implements Serializable {
     private String password;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "usuario_authority",
             joinColumns = {@JoinColumn(name = "usuario_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")}
     )
     private Set<Authority> authorities = new HashSet<>();
+
     @Column(name = "totp_secret")
     private String totpSecret;
 
-    @Column(name = "two_factor_enabled",nullable = false)
+    @Column(name = "two_factor_enabled", nullable = false)
     private boolean twoFactorEnabled = false;
 
-    @Column(name = "account_verified",nullable = false)
+    @Column(name = "account_verified", nullable = false)
     private boolean accountVerified = false;
+
+    @JsonIgnore
+    @Transient
+    private boolean skipPasswordEncoding = false;
 
     public Usuario(String username, String password, Set<Authority> authorities) {
         this.username = username.toLowerCase();

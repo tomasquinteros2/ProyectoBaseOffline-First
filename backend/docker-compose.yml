@@ -8,6 +8,9 @@ services:
       SPRING_PROFILES_ACTIVE: "offline"
       EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
       EUREKA_CLIENT_FETCH_REGISTRY: "false"
+      SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 600000
+      SPRING_DATASOURCE_HIKARI_KEEP_ALIVE_TIME: 300000
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TEST_QUERY: "SELECT 1"
     volumes:
       - eureka-data:/data
     healthcheck:
@@ -20,13 +23,13 @@ services:
 
   postgres-db-offline:
     image: postgres:14-alpine
-    container_name: --
-    ports:
-      - "5433:5432"
+    container_name: postgres_db_offline
+    ports: # Puerto para la base de datos de producción
+      - "5432:5432" # Usaremos el puerto estándar 5432 para producción
     environment:
-      POSTGRES_DB: --
-      POSTGRES_USER: --
-      POSTGRES_PASSWORD: --
+      POSTGRES_DB: ecopila_db_offline
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
     volumes:
       - offline-db-volume:/var/lib/postgresql/data
     healthcheck:
@@ -50,7 +53,10 @@ services:
       SPRING_PROFILES_ACTIVE: "offline"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
       EUREKA_URI: "http://eureka:8761/eureka"
-      JWT_BASE64_SECRET: "--"
+      SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 600000
+      SPRING_DATASOURCE_HIKARI_KEEP_ALIVE_TIME: 300000
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TEST_QUERY: "SELECT 1"
+      JWT_BASE64_SECRET: "hRFxCC9ibkLnqP9Js9FiWRbCme1dbLPLIRzQVPKmhK/LscULomJ/flJJpUaZ+M9fa+hT0X4gpeileNbQJrEBrw=="
     depends_on:
       eureka:
         condition: service_healthy
@@ -65,12 +71,21 @@ services:
     ports: [ "8086:8086" ]
     environment:
       SPRING_PROFILES_ACTIVE: "offline"
-      JWT_SECRET_KEY: "--"
+      JWT_SECRET_KEY: "hRFxCC9ibkLnqP9Js9FiWRbCme1dbLPLIRzQVPKmhK/LscULomJ/flJJpUaZ+M9fa+hT0X4gpeileNbQJrEBrw=="
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
-      GMAIL_USERNAME: "--"
-      GMAIL_APP_PASSWORD: "---"
-      APPLICATION_INVITE_MANAGER_EMAIL: "--"
-      APPLICATION_INVITE_FROM_EMAIL: "--"
+      GMAIL_USERNAME: "ecopilastockapp@gmail.com"
+      GMAIL_APP_PASSWORD: "zxgk uhso eyav ywui"
+      APPLICATION_INVITE_MANAGER_EMAIL: "redimarcelo@gmail.com"
+      APPLICATION_INVITE_FROM_EMAIL: "ecopilastockapp@gmail.com"
+      SERVER_PORT: 8086
+      APP_SYNC_NODE-ID: "AUTO"
+      APP_SYNC_FOLDER-PATH: "/sync_data"
+      SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 600000
+      SPRING_DATASOURCE_HIKARI_KEEP_ALIVE_TIME: 300000
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TEST_QUERY: "SELECT 1"
+    volumes:
+      - ${ONEDRIVE_SYNC}:/sync_data
+      - app-config:/app/config
     depends_on:
       eureka:
         condition: service_healthy
@@ -82,12 +97,21 @@ services:
     build:
       context: .
       dockerfile: microservicio_dolar/Dockerfile
-    ports: [ "8082:8082" ]
+    ports: [ "8082:8082" ] # Puerto para el servicio de dólar de producción
     environment:
       SPRING_PROFILES_ACTIVE: "offline"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
-      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -XX:+ClassUnloading -XX:ActiveProcessorCount=1 -XX:ThreadStackSize=512k -Xms96m -Xmx176m -XX:MaxMetaspaceSize=112m -XX:ReservedCodeCacheSize=48m -XX:MaxDirectMemorySize=32m -XX:+ExitOnOutOfMemoryError -Dspring.main.lazy-initialization=true -Dserver.tomcat.threads.max=16"
+      SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 600000
+      SPRING_DATASOURCE_HIKARI_KEEP_ALIVE_TIME: 300000
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TEST_QUERY: "SELECT 1"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -XX:+ClassUnloading -XX:ActiveProcessorCount=1 -XX:ThreadStackSize=512k -Xms96m -Xmx176m -XX:MaxMetaspaceSize=112m -XX:ReservedCodeCacheSize=48m -XX:MaxDirectMemorySize=32m -XX:+ExitOnOutOfMemoryError -Dserver.tomcat.threads.max=16"
+      APP_SYNC_FOLDER-PATH: "/sync_data"
+      APP_SYNC_NODE-ID: "AUTO"
+      SERVER_PORT: 8082
+    volumes:
+      - sync-data:/sync_data
+      - app-config:/app/config
     depends_on:
       eureka:
         condition: service_healthy
@@ -105,15 +129,23 @@ services:
     build:
       context: .
       dockerfile: microservicio_producto/Dockerfile
-    ports: [ "8083:8083" ]
+    ports: [ "8083:8083" ] # Puerto para el servicio de producto de producción
     environment:
       SPRING_PROFILES_ACTIVE: "offline"
+      SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 600000
+      SPRING_DATASOURCE_HIKARI_KEEP_ALIVE_TIME: 300000
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TEST_QUERY: "SELECT 1"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
+      APP_SYNC_NODE-ID: "AUTO"
+      APP_SYNC_FOLDER-PATH: "/sync_data"
     depends_on:
       eureka:
         condition: service_healthy
       postgres-db-offline:
         condition: service_healthy
+    volumes:
+      - sync-data:/sync_data
+      - app-config:/app/config
     healthcheck:
       test: [ "CMD-SHELL","wget -qO- http://localhost:8083/actuator/health | grep -q UP" ]
       interval: 10s
@@ -130,19 +162,29 @@ services:
       - "8084:8084"
     environment:
       SPRING_PROFILES_ACTIVE: "offline"
+      environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
-      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -XX:+ClassUnloading -XX:ActiveProcessorCount=1 -XX:ThreadStackSize=512k -Xms96m -Xmx168m -XX:MaxMetaspaceSize=112m -XX:ReservedCodeCacheSize=32m -XX:MaxDirectMemorySize=12m -XX:+ExitOnOutOfMemoryError -Dspring.main.lazy-initialization=true -Dserver.tomcat.threads.max=16"
+      SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 600000
+      SPRING_DATASOURCE_HIKARI_KEEP_ALIVE_TIME: 300000
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TEST_QUERY: "SELECT 1"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -XX:+ClassUnloading -XX:ActiveProcessorCount=1 -XX:ThreadStackSize=512k -Xms96m -Xmx168m -XX:MaxMetaspaceSize=112m -XX:ReservedCodeCacheSize=32m -XX:MaxDirectMemorySize=12m -XX:+ExitOnOutOfMemoryError -Dserver.tomcat.threads.max=16"
+      APP_SYNC_NODE-ID: "AUTO"
+      APP_SYNC_FOLDER-PATH: "/sync_data"
+      SERVER_PORT: 8084
     depends_on:
       eureka:
         condition: service_healthy
       postgres-db-offline:
         condition: service_healthy
+    volumes:
+      - sync-data:/sync_data
+      - app-config:/app/config
     healthcheck:
       test: [ "CMD-SHELL","wget -qO- http://localhost:8084/actuator/health | grep -q UP" ]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 20s
+      start_period: 30s
     mem_limit: 300m
 
 
@@ -150,16 +192,25 @@ services:
     build:
       context: .
       dockerfile: microservicio_tipo_producto/Dockerfile
-    ports: [ "8085:8085" ]
+    ports: [ "8085:8085" ] # Puerto para el servicio de tipo de producto de producción
     environment:
       SPRING_PROFILES_ACTIVE: "offline"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
-      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -XX:+ClassUnloading -XX:ActiveProcessorCount=1 -XX:ThreadStackSize=512k -Xms96m -Xmx168m -XX:MaxMetaspaceSize=96m -XX:ReservedCodeCacheSize=40m -XX:MaxDirectMemorySize=24m -XX:+ExitOnOutOfMemoryError -Dspring.main.lazy-initialization=true -Dserver.tomcat.threads.max=16"
+      SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 600000
+      SPRING_DATASOURCE_HIKARI_KEEP_ALIVE_TIME: 300000
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TEST_QUERY: "SELECT 1"
+      JAVA_TOOL_OPTIONS: "-XX:+UseSerialGC -XX:+ClassUnloading -XX:ActiveProcessorCount=1 -XX:ThreadStackSize=512k -Xms96m -Xmx168m -XX:MaxMetaspaceSize=96m -XX:ReservedCodeCacheSize=40m -XX:MaxDirectMemorySize=24m -XX:+ExitOnOutOfMemoryError -Dserver.tomcat.threads.max=16"
+      APP_SYNC_NODE-ID: "AUTO"
+      APP_SYNC_FOLDER-PATH: "/sync_data"
+      SERVER_PORT: 8085
     depends_on:
       eureka:
         condition: service_healthy
       postgres-db-offline:
         condition: service_healthy
+    volumes:
+      - sync-data:/sync_data
+      - app-config:/app/config
     healthcheck:
       test: [ "CMD-SHELL", "wget -qO- http://localhost:8085/actuator/health | grep -q UP" ]
       interval: 10s
@@ -168,47 +219,25 @@ services:
       start_period: 20s
     mem_limit: 300m
 
-# symmetricds-client:
-      #   build:
-      #     context: .
-      #     dockerfile: symmetricds/client/Dockerfile
-      #   container_name: symmetricds_client_${INSTANCE_ID:-1}
-      #   hostname: client-${INSTANCE_ID:-1}
-      #   ports:
-      #     - "${CLIENT_PORT:-8081}:8081"
-      #   environment:
-      #     - JAVA_OPTS=-Xmx512m -Dh2.baseDir=/app
-      #     - INSTANCE_ID=${INSTANCE_ID:-1}
-      #     - SYMMETRIC_ROUTING_IGNORE_DUPLICATE_BATCH_INSERTS=true
-      #   volumes:
-      #     - symmetricds-client-data:/app/data
-      #   depends_on:
-      #     producto-service:
-      #       condition: service_healthy
-      #     proveedor-service:
-      #       condition: service_healthy
-      #     tipo-producto-service:
-      #       condition: service_healthy
-      #     dolar-service:
-      #       condition: service_healthy
-      #     auth-service:
-      #       condition: service_started
-      #   networks:
-      #     - default
-
-  frontend-pwa:
+  frontend-pwa-prod:
     build:
       context: ../ecopila-pwa
       dockerfile: Dockerfile
-    container_name: frontend_pwa
+    container_name: frontend_pwa_prod
     ports:
-      - "4173:80"
+      - "${FRONTEND_PORT:-4173}:80"
     depends_on:
       producto-service:
-        condition: service_healthy
+        condition: service_started
 
 volumes:
   eureka-data:
   redis-data:
   offline-db-volume:
-  symmetricds-client-data:
+  app-config:
+  sync-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${ONEDRIVE_SYNC}"
