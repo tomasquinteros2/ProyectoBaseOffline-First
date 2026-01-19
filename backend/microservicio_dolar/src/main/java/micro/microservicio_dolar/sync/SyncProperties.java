@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.UUID;
 
-@Component
+//@Component
 @Getter
 @Setter
 @Slf4j

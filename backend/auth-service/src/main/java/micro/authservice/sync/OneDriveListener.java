@@ -18,7 +18,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Component
+// @Component
 @Slf4j
 public class OneDriveListener {
 
@@ -31,13 +31,13 @@ public class OneDriveListener {
         this.syncProps = syncProps;
     }
 
-    @PostPersist
-    @PostUpdate
+    // @PostPersist
+    // @PostUpdate
     public void onSave(Object entity) {
         exportChange(entity, "SAVE");
     }
 
-    @PostRemove
+    // @PostRemove
     public void onDelete(Object entity) {
         exportChange(entity, "DELETE");
     }

@@ -24,7 +24,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-@Service
+//@Service
 @RequiredArgsConstructor
 @Slf4j
 public class InitialSnapshotService {
