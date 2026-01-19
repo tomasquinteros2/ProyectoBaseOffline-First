@@ -37,5 +37,5 @@ server:
 
 application:
   invite:
-    manager-email: ${APPLICATION_INVITE_MANAGER_EMAIL:redimarcelo@gmail.com}
-    from-email: ${APPLICATION_INVITE_FROM_EMAIL:redimarcelo@gmail.com}
+    manager-email: ${APPLICATION_INVITE_MANAGER_EMAIL:tomas.quinteros2002@gmail.com}
+    from-email: ${APPLICATION_INVITE_FROM_EMAIL:tomas.quinteros2002@gmail.com}

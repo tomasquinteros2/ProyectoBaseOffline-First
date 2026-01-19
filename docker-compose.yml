@@ -75,7 +75,7 @@ services:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka:8761/eureka"
       GMAIL_USERNAME: "ecopilastockapp@gmail.com"
       GMAIL_APP_PASSWORD: "zxgk uhso eyav ywui"
-      APPLICATION_INVITE_MANAGER_EMAIL: "redimarcelo@gmail.com"
+      APPLICATION_INVITE_MANAGER_EMAIL: "tomas.quinteros2002@gmail.com"
       APPLICATION_INVITE_FROM_EMAIL: "ecopilastockapp@gmail.com"
       SERVER_PORT: 8086
       #APP_SYNC_NODE-ID: "AUTO"
