@@ -221,7 +221,7 @@ services:
 
   frontend-pwa-prod:
     build:
-      context: ../ecopila-pwa
+      context: ../frontend
       dockerfile: Dockerfile
     container_name: frontend_pwa_prod
     ports:
