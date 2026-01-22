@@ -47,10 +47,10 @@ public class AuthService {
             @Override
             public void afterCommit() {
                 oneDriveListener.exportChange(invite, "SAVE");
-                emailService.sendInviteCodeEmail(invite); // no bloquea gracias a @Async
+                 // no bloquea gracias a @Async
             }
         });*/
-
+        emailService.sendInviteCodeEmail(invite);
         return new InviteCodeDTO(
                 null,
                 managerEmail,
