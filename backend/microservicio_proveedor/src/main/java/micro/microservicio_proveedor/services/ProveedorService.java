@@ -83,12 +83,12 @@ public class ProveedorService {
         });
 
         Proveedor proveedorGuardado = proveedorRepository.save(proveedor);
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(proveedorGuardado, "SAVE");
             }
-        });
+        });*/
         log.info("Proveedor nuevo guardado: {}", proveedorGuardado);
         return proveedorGuardado;
     }
@@ -137,12 +137,12 @@ public class ProveedorService {
         }
 
         log.info("Proveedor con ID {} actualizado correctamente.", id);
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(proveedorActualizado, "SAVE");
             }
-        });
+        });*/
         return proveedorActualizado;
     }
 
@@ -172,12 +172,12 @@ public class ProveedorService {
         }
         Proveedor existing = findById(id);
         proveedorRepository.deleteById(id);
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(existing, "DELETE");
             }
-        });
+        });*/
         log.info("Proveedor con ID {} eliminado correctamente.", id);
     }
 

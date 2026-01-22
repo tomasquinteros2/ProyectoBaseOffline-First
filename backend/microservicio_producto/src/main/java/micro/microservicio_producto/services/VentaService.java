@@ -109,12 +109,12 @@ public class VentaService {
         nuevaVenta.setTotalVenta(totalVenta);
         Venta ventaGuardada = ventaRepository.save(nuevaVenta);
 
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(ventaGuardada, "SAVE");
             }
-        });
+        });*/
 
         return mapToVentaResponseDTO(ventaGuardada);
     }

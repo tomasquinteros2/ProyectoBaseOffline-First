@@ -217,12 +217,12 @@ public class ProductoService {
 
         Producto saved = productoRepository.save(productToSave);
 
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(saved, "SAVE");
             }
-        });
+        });*/
 
         return saved;
     }
@@ -241,12 +241,12 @@ public class ProductoService {
         }
         Producto updated = productoRepository.save(productoExistente);
 
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(updated, "SAVE");
             }
-        });
+        });*/
 
         return updated;
     }
@@ -260,12 +260,12 @@ public class ProductoService {
         productoRepository.eliminarRelaciones(id);
         productoRepository.deleteById(id);
 
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(existing, "DELETE");
             }
-        });
+        });*/
     }
 
     @Transactional
@@ -291,7 +291,7 @@ public class ProductoService {
             log.warn("No se pudo flush/clear el EntityManager: {}", e.getMessage());
         }
 
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 try {
@@ -301,7 +301,7 @@ public class ProductoService {
                     log.error("Error exportando productos tras commit: {}", e.getMessage(), e);
                 }
             }
-        });
+        });*/
     }
 
     @Transactional
@@ -314,12 +314,12 @@ public class ProductoService {
         producto1.agregarRelacion(producto2);
         Producto productoGuardado = productoRepository.save(producto1);
 
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(productoGuardado, "SAVE");
             }
-        });
+        });*/
     }
     @Transactional
     public void eliminarRelacion(ProductoRelacionadoDTO dto) {
@@ -578,12 +578,12 @@ public class ProductoService {
 
                     Producto saved = productoRepository.save(entity);
 
-                    TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+                    /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
                         @Override
                         public void afterCommit() {
                             OneDriveListener.exportChange(saved, "SAVE");
                         }
-                    });
+                    });*/
 
                     if (++processed % batchSize == 0) {
                         em.flush();
@@ -620,12 +620,12 @@ public class ProductoService {
         log.info("Se eliminaron las relaciones: {}", ids);
         productoRepository.deleteAllById(ids);
         log.info("Se eliminaron los productos: {}", ids);
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 snapshots.forEach(p -> OneDriveListener.exportChange(p, "DELETE"));
             }
-        });
+        });*/
     }
     @Transactional(readOnly = true)
     public LastModifiedDTO getLastModified() {

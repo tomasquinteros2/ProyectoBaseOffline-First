@@ -85,12 +85,12 @@ public class TipoProductoService {
         log.info("Guardando {} nuevos tipos de producto.", tiposRealmenteNuevos.size());
 
         List<TipoProducto> tiposGuardados =  tipoProductoRepository.saveAll(tiposRealmenteNuevos);
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 tiposGuardados.forEach(p -> OneDriveListener.exportChange(p, "SAVE"));
             }
-        });
+        });*/
         return tiposGuardados;
     }
 
@@ -109,12 +109,12 @@ public class TipoProductoService {
             throw new BusinessLogicException("Ya existe un tipo de producto con el nombre: " + tipoProducto.getNombre());
         }
         TipoProducto tipoGuardado = tipoProductoRepository.save(tipoProducto);
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(tipoGuardado, "SAVE");
             }
-        });
+        });*/
         return tipoGuardado;
     }
 
@@ -139,12 +139,12 @@ public class TipoProductoService {
         tipoExistente.setNombre(tipoProductoDetails.getNombre());
 
         TipoProducto tipoActualizado = tipoProductoRepository.save(tipoExistente);
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(tipoActualizado, "SAVE");
             }
-        });
+        });*/
         return tipoActualizado;
     }
 
@@ -160,12 +160,12 @@ public class TipoProductoService {
         }
         TipoProducto existing = findById(id);
         tipoProductoRepository.deleteById(id);
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(existing, "DELETE");
             }
-        });
+        });*/
         log.info("Tipo de producto con ID {} eliminado correctamente.", id);
     }
     public void validarExistencia(List<Long> ids) {

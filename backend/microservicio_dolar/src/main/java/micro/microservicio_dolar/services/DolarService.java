@@ -5,7 +5,7 @@ import jakarta.transaction.Transactional;
 import micro.microservicio_dolar.entities.dto.DolarApiResponseDTO;
 import micro.microservicio_dolar.entities.Dolar;
 import micro.microservicio_dolar.repository.DolarRepository;
-import micro.microservicio_dolar.sync.OneDriveListener;
+//import micro.microservicio_dolar.sync.OneDriveListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -80,12 +80,12 @@ public class DolarService {
             dolar.setNombre(initialName);
             dolar.setPrecio(initialPrice);
             dolarRepository.save(dolar);
-            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
                 @Override
                 public void afterCommit() {
                     OneDriveListener.exportChange(dolar, "SAVE");
                 }
-            });
+            });*/
             log.info("Registro de Dólar inicial creado: {}", dolar);
         } else {
             // Si ya hay datos, no hacemos nada. Se usará el último valor guardado.
@@ -118,12 +118,12 @@ public class DolarService {
     @Transactional
     public Dolar save(Dolar dolar) {
         Dolar newDolar = dolarRepository.save(dolar);
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(newDolar, "SAVE");
             }
-        });
+        });*/
         log.info("Dólar guardado: {}", newDolar);
         return newDolar;
     }
@@ -144,12 +144,12 @@ public class DolarService {
         existingDolar.setPrecio(dolarDetails.getPrecio());
 
         Dolar updatedDolar = dolarRepository.save(existingDolar);
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(updatedDolar, "SAVE");
             }
-        });
+        });*/
         log.info("Dólar actualizado ID {}: {}", id, updatedDolar);
         return updatedDolar;
     }
@@ -166,12 +166,12 @@ public class DolarService {
         }
         Dolar exiting = dolarRepository.findById(id).orElse(null);
         dolarRepository.deleteById(id);
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(exiting, "DELETE");
             }
-        });
+        });*/
         log.info("Dólar eliminado con ID: {}", id);
     }
 

@@ -23,18 +23,19 @@ public class AuthService {
     private final InviteCodeRepository repository;
     private final EmailService emailService;
     private final String managerEmail;
-    private final OneDriveListener oneDriveListener;
+    //private final OneDriveListener oneDriveListener;
     private final SecureRandom random = new SecureRandom();
     private static final String ALPHANUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     public AuthService(InviteCodeRepository repository,
                        EmailService emailService,
                        @Value("${application.invite.manager-email}") String managerEmail,
-                       OneDriveListener oneDriveListener) {
+                       //OneDriveListener oneDriveListener) {
+    ){
         this.repository = repository;
         this.emailService = emailService;
         this.managerEmail = managerEmail;
-        this.oneDriveListener = oneDriveListener;
+        //this.oneDriveListener = oneDriveListener;
     }
 
     @Transactional
@@ -42,13 +43,13 @@ public class AuthService {
         InviteCode invite = buildInvite(request);
         repository.save(invite);
 
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 oneDriveListener.exportChange(invite, "SAVE");
                 emailService.sendInviteCodeEmail(invite); // no bloquea gracias a @Async
             }
-        });
+        });*/
 
         return new InviteCodeDTO(
                 null,
@@ -66,12 +67,12 @@ public class AuthService {
                 .map(invite -> {
                     invite.setUsed(true);
                     repository.save(invite);
-                    TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+                    /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
                         @Override
                         public void afterCommit() {
                             oneDriveListener.exportChange(invite, "SAVE");
                         }
-                    });
+                    });*/
                     return true;
                 })
                 .orElse(false);

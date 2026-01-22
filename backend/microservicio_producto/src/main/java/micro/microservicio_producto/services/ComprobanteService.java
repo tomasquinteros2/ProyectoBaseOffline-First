@@ -68,12 +68,12 @@ public class ComprobanteService {
         } else {
             comprobante.setNumero(numeroActual + 1);
         }
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        /*TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
                 OneDriveListener.exportChange(comprobante, "SAVE");
             }
-        });
+        });*/
         return comprobante;
     }
 
