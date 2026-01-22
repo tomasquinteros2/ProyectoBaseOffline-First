@@ -25,18 +25,19 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
     private final AuthService authService;
-    private final OneDriveListener oneDriveListener;
+    // private final OneDriveListener oneDriveListener;
 
     public UserService(UsuarioRepository usuarioRepository,
                        PasswordEncoder passwordEncoder,
                        AuthorityRepository authorityRepository,
-                       AuthService authService,
-                       OneDriveListener oneDriveListener) {
+                       AuthService authService
+                       // OneDriveListener oneDriveListener
+    ) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.authService = authService;
-        this.oneDriveListener = oneDriveListener;
+        // this.oneDriveListener = oneDriveListener;
     }
 
     @Transactional
@@ -69,12 +70,12 @@ public class UserService {
         authorities.add(authority);
         newUser.setAuthorities(authorities);
         Usuario created = usuarioRepository.save(newUser);
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
-            @Override
-            public void afterCommit() {
-                oneDriveListener.exportChange(created, "SAVE");
-            }
-        });
+        // TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+        //     @Override
+        //     public void afterCommit() {
+        //         oneDriveListener.exportChange(created, "SAVE");
+        //     }
+        // });
         return created;
     }
 }
