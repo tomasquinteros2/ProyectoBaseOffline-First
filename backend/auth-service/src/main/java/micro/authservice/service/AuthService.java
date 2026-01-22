@@ -29,9 +29,9 @@ public class AuthService {
 
     public AuthService(InviteCodeRepository repository,
                        EmailService emailService,
-                       @Value("${application.invite.manager-email}") String managerEmail,
-                       //OneDriveListener oneDriveListener) {
-    ){
+                       @Value("${application.invite.manager-email}") String managerEmail
+                       //OneDriveListener oneDriveListener
+    ) {
         this.repository = repository;
         this.emailService = emailService;
         this.managerEmail = managerEmail;
