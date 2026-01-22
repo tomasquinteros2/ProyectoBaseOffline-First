@@ -57,6 +57,7 @@ services:
       SPRING_DATASOURCE_HIKARI_KEEP_ALIVE_TIME: 300000
       SPRING_DATASOURCE_HIKARI_CONNECTION_TEST_QUERY: "SELECT 1"
       JWT_BASE64_SECRET: "hRFxCC9ibkLnqP9Js9FiWRbCme1dbLPLIRzQVPKmhK/LscULomJ/flJJpUaZ+M9fa+hT0X4gpeileNbQJrEBrw=="
+      JAVA_TOOL_OPTIONS: "-Djava.security.egd=file:/dev/./urandom"
     depends_on:
       eureka:
         condition: service_healthy
@@ -82,7 +83,7 @@ services:
       #APP_SYNC_FOLDER-PATH: "/sync_data"
       SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 600000
       SPRING_DATASOURCE_HIKARI_KEEP_ALIVE_TIME: 300000
-      SPRING_DATASOURCE_HIKARI_CONNECTION_TEST_QUERY: "SELECT 1"
+      JAVA_TOOL_OPTIONS: "-Djava.security.egd=file:/dev/./urandom"
     volumes:
       #- ${ONEDRIVE_SYNC}:/sync_data
       - app-config:/app/config
